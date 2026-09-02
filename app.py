@@ -1055,7 +1055,7 @@ with col_down2:
         st.download_button(
             label="Download Dossier (CSV)",
             data=csv,
-            file_name=f"banking_audit_dossier_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.csv",
+            file_name=f"banking_audit_dossier_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M')}.csv",
             mime="text/csv",
             use_container_width=True
         )
