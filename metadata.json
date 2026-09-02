@@ -1,6 +1,6 @@
 {
   "name": "Audit Intelligence",
-  "description": "Targeted global banking news focused on Audit, Risk, Controls, Regulation, Cyber/Technology and Banking Leadership.",
+  "description": "Targeted global banking intelligence focused on Audit, Risk, Controls, Regulation, Transformation, Leadership and Global Banks.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
