@@ -1,0 +1,25 @@
+# Streamlit local secrets (Never commit secrets to git!)
+.streamlit/secrets.toml
+
+# Python / Virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Environment Variables
+.env
+.env.local
+
+# Android / Gradle build artifacts
+.gradle/
+build/
+app/build/
+*.apk
+*.aab
+local.properties
