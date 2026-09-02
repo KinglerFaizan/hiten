@@ -14,280 +14,487 @@ except ImportError:
 
 
 # ---------------------------------------------------------
-# 1. APP CONFIGURATION & EDITORIAL FUTURISTIC PALETTE
+# 1. APPLICATION SETUP & APEX FUTURISTIC COMMAND CENTER CSS
 # ---------------------------------------------------------
 
 st.set_page_config(
-    page_title="Audit Intel | Global Banking Briefing",
+    page_title="APEX | Executive Banking Intelligence",
     page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# High-End Modern Editorial Theme: Warm ivory canvas, rich obsidian ink, warm amber accent, rounded cards
+# World-class Futuristic Executive Theme: Deep space obsidian canvas, glassmorphism, cyan micro-glows, crystal contrast
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-    /* Global Canvas */
+    /* Global Dark Canvas */
     .stApp {
-        background-color: #F7F5F0;
-        color: #1C1917;
+        background: radial-gradient(circle at 50% 0%, #0F172A 0%, #080C16 65%, #050811 100%);
+        color: #F8FAFC !important;
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #EFECE5;
-        border-right: 1px solid #E4DFD5;
-    }
-    [data-testid="stSidebar"] hr {
-        border-color: #E0DBD0;
-    }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-        color: #1C1917 !important;
+    /* Streamlit Global Text Overrides */
+    p, span, label, div {
+        color: #E2E8F0;
     }
 
-    /* Editorial Briefing Header */
-    .briefing-tag {
+    /* Sidebar - Sleek Glassmorphism */
+    [data-testid="stSidebar"] {
+        background-color: #0B1120 !important;
+        border-right: 1px solid rgba(56, 189, 248, 0.12) !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+    [data-testid="stSidebar"] hr {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Sidebar Labels */
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] span,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] label p {
+        color: #94A3B8 !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.8px !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    /* Sliders - High-Tech Cyan Neon Track */
+    [data-testid="stSlider"] div[data-testid="stThumbValue"],
+    [data-testid="stSlider"] span {
+        color: #38BDF8 !important;
+        font-weight: 700 !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+    div[data-testid="stSlider"] [role="slider"] {
+        background-color: #38BDF8 !important;
+        border: 2px solid #FFFFFF !important;
+        box-shadow: 0 0 12px #38BDF8 !important;
+    }
+
+    /* MultiSelect Container & Chips */
+    [data-baseweb="select"] > div {
+        background-color: #111C33 !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
+        border-radius: 12px !important;
+    }
+    [data-baseweb="tag"] {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(14, 165, 233, 0.1)) !important;
+        border: 1px solid rgba(56, 189, 248, 0.35) !important;
+        border-radius: 8px !important;
+        padding: 3px 8px !important;
+    }
+    [data-baseweb="tag"] span {
+        color: #38BDF8 !important;
+        font-weight: 600 !important;
+        font-size: 12px !important;
+    }
+    [data-baseweb="tag"] svg {
+        fill: #38BDF8 !important;
+    }
+
+    /* Futuristic HUD Header */
+    .hud-header {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(11, 17, 32, 0.95) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 16px;
+        padding: 24px 30px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+    }
+    .hud-header::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 2px;
+        background: linear-gradient(90deg, transparent, #38BDF8, #818CF8, transparent);
+    }
+    .hud-sub-badge {
         font-family: 'JetBrains Mono', monospace;
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 1.5px;
-        color: #B45309;
+        color: #38BDF8;
+        display: flex;
+        align-items: center;
+        gap: 8px;
         text-transform: uppercase;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
-    .briefing-headline {
-        font-family: 'Newsreader', Georgia, serif;
-        font-size: 38px;
-        font-weight: 600;
-        color: #18181B;
+    .radar-pulse-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #10B981;
+        border-radius: 50%;
+        box-shadow: 0 0 12px #10B981, 0 0 20px #10B981;
+        animation: pulseAnimation 2s infinite ease-in-out;
+    }
+    @keyframes pulseAnimation {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.6; }
+    }
+    .hud-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #FFFFFF;
         letter-spacing: -0.8px;
-        line-height: 1.15;
+        line-height: 1.2;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+    .hud-live-tag {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #34D399;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+    .hud-desc {
+        font-size: 14.5px;
+        color: #94A3B8;
+        max-width: 850px;
+        line-height: 1.55;
+    }
+
+    /* Metric Telemetry Cards */
+    .metric-card {
+        background: linear-gradient(145deg, rgba(17, 25, 45, 0.7), rgba(11, 16, 30, 0.8));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 18px 20px;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .metric-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 10px 25px -8px rgba(56, 189, 248, 0.2);
+    }
+    .metric-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 2px;
+        background: rgba(56, 189, 248, 0.2);
+    }
+    .metric-label-mono {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #64748B;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
         margin-bottom: 6px;
     }
-    .briefing-subhead {
-        font-size: 14.5px;
-        color: #78716C;
-        margin-bottom: 24px;
-        font-weight: 400;
+    .metric-value-display {
+        font-size: 30px;
+        font-weight: 800;
+        color: #F8FAFC;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+    }
+    .metric-sub {
+        font-size: 11px;
+        color: #38BDF8;
+        font-weight: 600;
+        font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Metric Stat Cards */
-    .editorial-metric {
-        background: #FFFFFF;
-        border: 1px solid #E6E1D7;
-        border-radius: 14px;
-        padding: 16px 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .editorial-metric:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
-    }
-    .metric-label {
-        font-size: 11.5px;
-        font-weight: 600;
-        color: #78716C;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        margin-bottom: 4px;
-    }
-    .metric-count {
-        font-family: 'Newsreader', Georgia, serif;
-        font-size: 28px;
-        font-weight: 600;
-        color: #18181B;
-    }
-
-    /* Pill-style Tabs matching Image */
+    /* Pill-style Filter Tabs */
     div[data-testid="stTabs"] {
-        margin-top: 10px;
+        margin-top: 14px;
         margin-bottom: 24px;
     }
     div[data-testid="stTabs"] [role="tablist"] {
-        gap: 10px;
-        border-bottom: none;
+        gap: 12px;
+        border-bottom: none !important;
     }
     div[data-testid="stTabs"] button[role="tab"] {
         border-radius: 30px !important;
-        padding: 7px 20px !important;
-        font-size: 14px !important;
-        font-weight: 600 !important;
-        background-color: #FFFFFF !important;
-        border: 1px solid #E6E1D7 !important;
-        color: #57534E !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+        padding: 8px 22px !important;
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+        background-color: rgba(15, 23, 42, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #94A3B8 !important;
         transition: all 0.2s ease !important;
+        backdrop-filter: blur(8px) !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"] p,
+    div[data-testid="stTabs"] button[role="tab"] span {
+        color: #94A3B8 !important;
+        font-weight: 600 !important;
     }
     div[data-testid="stTabs"] button[role="tab"]:hover {
-        border-color: #B45309 !important;
-        color: #1C1917 !important;
+        border-color: rgba(56, 189, 248, 0.4) !important;
+        color: #F8FAFC !important;
+        background-color: rgba(56, 189, 248, 0.1) !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"]:hover p {
+        color: #38BDF8 !important;
     }
     div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-        background-color: #18181B !important;
-        border-color: #18181B !important;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.12)) !important;
+        border: 1px solid #38BDF8 !important;
         color: #FFFFFF !important;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12) !important;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.3) !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span {
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
     }
 
-    /* Article Card - Exactly matching the uploaded style */
-    .article-briefing-card {
-        background: #FFFFFF;
-        border: 1px solid #E6E1D7;
-        border-radius: 18px;
+    /* Dossier Intelligence Cards */
+    .dossier-card {
+        background: linear-gradient(145deg, rgba(16, 24, 43, 0.8) 0%, rgba(10, 16, 30, 0.9) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
         padding: 24px 28px;
         margin-bottom: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
     }
-    .article-briefing-card:hover {
-        border-color: #D6D0C4;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    .dossier-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 14px 34px -8px rgba(56, 189, 248, 0.18);
+        background: linear-gradient(145deg, rgba(20, 30, 54, 0.85) 0%, rgba(13, 20, 38, 0.95) 100%);
     }
-    .card-top-row {
+    .card-meta-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .source-identity {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 14px;
+        gap: 10px;
     }
-    .icon-badge {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        background-color: #F0FDF4;
-        border: 1.5px solid #BBF7D0;
+    .source-emblem {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.25);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #15803D;
-        font-size: 16px;
-        flex-shrink: 0;
+        font-size: 15px;
     }
-    .meta-text-top {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.35;
-    }
-    .category-time {
-        font-size: 11px;
-        font-weight: 700;
-        color: #0F766E;
-        text-transform: uppercase;
-        letter-spacing: 0.6px;
-    }
-    .source-name {
+    .source-name-text {
         font-size: 13.5px;
-        font-weight: 600;
-        color: #78716C;
+        font-weight: 700;
+        color: #F8FAFC;
+        letter-spacing: -0.2px;
+    }
+    .source-timestamp {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        color: #64748B;
+        font-weight: 500;
     }
 
-    /* Increased, Natural Font Sizes */
-    .card-title-text {
-        font-family: 'Newsreader', Georgia, serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: #18181B;
-        line-height: 1.35;
-        letter-spacing: -0.2px;
+    /* Relevance HUD Badge */
+    .relevance-hud {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .relevance-pill {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .score-urgent {
+        background: rgba(244, 63, 94, 0.15);
+        border: 1px solid rgba(244, 63, 94, 0.35);
+        color: #FB7185;
+    }
+    .score-elevated {
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.35);
+        color: #FBBF24;
+    }
+    .score-standard {
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        color: #38BDF8;
+    }
+
+    /* Category Tag */
+    .category-chip {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #94A3B8;
+    }
+
+    /* Card Headline */
+    .card-headline {
+        font-size: 20px;
+        font-weight: 700;
+        color: #FFFFFF;
+        line-height: 1.4;
+        letter-spacing: -0.3px;
         margin-bottom: 12px;
     }
-    .card-summary-text {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 16.5px;
+
+    /* Natural, High-Legibility Executive Summary */
+    .card-narrative {
+        font-size: 16px;
         font-weight: 400;
-        color: #44403C;
-        line-height: 1.65;
+        color: #CBD5E1;
+        line-height: 1.68;
         margin-bottom: 18px;
     }
 
-    /* Card Footer Actions */
-    .card-footer-row {
+    /* Detected Audit Control Tags */
+    .risk-factors-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+    .tag-chip {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10.5px;
+        color: #38BDF8;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 4px;
+        padding: 2px 7px;
+    }
+
+    /* Card Footer & Action Link */
+    .card-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-top: 14px;
-        border-top: 1px solid #F3EFE8;
-        font-size: 13px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .tag-badge {
-        font-size: 11.5px;
-        font-weight: 600;
-        color: #B45309;
-        background: #FEF3C7;
-        padding: 3px 10px;
-        border-radius: 20px;
-    }
-    .read-source-link {
-        font-size: 13px;
-        font-weight: 600;
-        color: #18181B;
-        text-decoration: none;
+    .action-link-btn {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        transition: color 0.15s ease;
+        font-size: 13px;
+        font-weight: 600;
+        color: #38BDF8;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        padding: 7px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
     }
-    .read-source-link:hover {
-        color: #B45309;
-        text-decoration: underline;
+    .action-link-btn:hover {
+        background: #38BDF8;
+        color: #080C16 !important;
+        border-color: #38BDF8;
+        box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+        text-decoration: none;
     }
 
-    /* Streamlit Input Overrides */
+    /* Search Input Styling */
     .stTextInput>div>div>input {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E6E1D7 !important;
-        color: #18181B !important;
+        background-color: #0F172A !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
+        color: #FFFFFF !important;
         border-radius: 12px !important;
-        padding: 12px 16px !important;
-        font-size: 14.5px !important;
+        padding: 14px 18px !important;
+        font-size: 14px !important;
     }
     .stTextInput>div>div>input:focus {
-        border-color: #B45309 !important;
-        box-shadow: 0 0 0 1px #B45309 !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.25) !important;
     }
+    .stTextInput>div>div>input::placeholder {
+        color: #64748B !important;
+    }
+
+    /* Primary Action Buttons */
     .stButton>button {
-        background-color: #18181B;
-        color: #FFFFFF;
-        border: 1px solid #18181B;
-        border-radius: 24px;
-        font-weight: 600;
-        font-size: 13.5px;
-        padding: 8px 20px;
-        transition: all 0.15s ease;
+        background: linear-gradient(135deg, #0284C7, #0369A1) !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
+        padding: 10px 22px !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25) !important;
     }
     .stButton>button:hover {
-        background-color: #27272A;
-        border-color: #27272A;
-        color: #FFFFFF;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #38BDF8, #0284C7) !important;
+        color: #080C16 !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4) !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------
-# 2. BANKING AUDIT CATEGORIES & QUERIES (NO CYBER & TECH)
+# 2. CORE INSTITUTIONAL BANKING INTELLIGENCE CONFIG
 # ---------------------------------------------------------
 
 CATEGORIES = {
     "Transformation": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance") AND ("digital transformation" OR "modernization" OR "core banking" OR "automation" OR "artificial intelligence" OR "generative AI" OR "cloud")'
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance") AND ("digital transformation" OR "modernization" OR "core banking" OR "automation" OR "artificial intelligence" OR "generative AI" OR "cloud")',
+        "icon": "⚡"
     },
     "Regulation": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "compliance" OR "risk" OR "governance") AND ("regulation" OR "regulatory" OR "supervision" OR "RBI" OR "Basel" OR "AML" OR "KYC" OR "sanctions" OR "prudential" OR "enforcement")'
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "compliance" OR "risk" OR "governance") AND ("regulation" OR "regulatory" OR "supervision" OR "RBI" OR "Basel" OR "AML" OR "KYC" OR "sanctions" OR "prudential" OR "enforcement")',
+        "icon": "⚖️"
     },
     "People": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "risk" OR "governance" OR "controls") AND ("appointed" OR "appointment" OR "CEO" OR "CFO" OR "CRO" OR "CISO" OR "chief audit" OR "internal audit" OR "audit committee" OR "board")'
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "risk" OR "governance" OR "controls") AND ("appointed" OR "appointment" OR "CEO" OR "CFO" OR "CRO" OR "CISO" OR "chief audit" OR "internal audit" OR "audit committee" OR "board")',
+        "icon": "👤"
     },
     "Global Banks": {
-        "query": '("bank" OR "banking group" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance" OR "regulatory") AND ("HSBC" OR "JPMorgan" OR "JPMorgan Chase" OR "Citi" OR "Citigroup" OR "Barclays" OR "Deutsche Bank" OR "UBS" OR "BNP Paribas" OR "Santander" OR "Standard Chartered" OR "Bank of America" OR "Goldman Sachs" OR "Morgan Stanley" OR "Wells Fargo" OR "ING" OR "ICBC" OR "MUFG" OR "Mizuho")'
+        "query": '("bank" OR "banking group" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance" OR "regulatory") AND ("HSBC" OR "JPMorgan" OR "JPMorgan Chase" OR "Citi" OR "Citigroup" OR "Barclays" OR "Deutsche Bank" OR "UBS" OR "BNP Paribas" OR "Santander" OR "Standard Chartered" OR "Bank of America" OR "Goldman Sachs" OR "Morgan Stanley" OR "Wells Fargo" OR "ING" OR "ICBC" OR "MUFG" OR "Mizuho")',
+        "icon": "🌐"
     },
 }
 
-# Audit vocabulary for relevance scoring
 AUDIT_TERMS = [
     "internal audit", "external audit", "audit committee", "auditor",
     "audit finding", "audit findings", "internal control", "internal controls",
@@ -295,15 +502,14 @@ AUDIT_TERMS = [
     "control deficiencies", "governance", "risk management", "operational risk",
     "model risk", "compliance", "regulatory", "regulation", "supervision",
     "supervisory", "enforcement", "aml", "anti-money laundering", "kyc",
-    "sanctions", "fraud", "misconduct", "financial crime",
+    "sanctions", "fraud", "misconduct", "financial crime", "basel", "sox"
 ]
 
 CATEGORY_TERMS = {
     "Transformation": [
-        "digital transformation", "modernization", "modernisation", "core banking",
-        "automation", "artificial intelligence", "generative ai", "genai",
-        "machine learning", "cloud", "digital banking", "technology transformation",
-        "operating model",
+        "digital transformation", "modernization", "core banking", "automation",
+        "artificial intelligence", "generative ai", "genai", "machine learning",
+        "cloud", "digital banking", "technology transformation", "operating model",
     ],
     "Regulation": [
         "regulation", "regulatory", "rbi", "basel", "prudential", "supervision",
@@ -313,7 +519,7 @@ CATEGORY_TERMS = {
     "People": [
         "appointed", "appointment", "ceo", "cfo", "cro", "ciso", "chief audit",
         "internal audit", "audit committee", "board", "director", "chairman",
-        "chairwoman", "leadership", "executive",
+        "leadership", "executive",
     ],
     "Global Banks": [
         "hsbc", "jpmorgan", "jpmorgan chase", "citi", "citigroup", "barclays",
@@ -329,7 +535,7 @@ CATEGORY_TERMS = {
 # ---------------------------------------------------------
 
 def get_api_key():
-    """Use Streamlit secrets/env first; sidebar entry is the fallback."""
+    """Extract NewsAPI key from config, env, or secrets."""
     if CONFIG_API_KEY.strip():
         return CONFIG_API_KEY.strip()
 
@@ -357,34 +563,56 @@ def normalize_text(article):
 
 
 def audit_relevance(text):
-    """Simple, transparent audit relevance score."""
+    """Fast, transparent audit relevance scoring (0-100)."""
     score = 0
     for term in AUDIT_TERMS:
         if term in text:
-            score += 5
+            score += 6
 
     # Stronger signals get additional weight
     for term in [
         "internal audit", "audit committee", "internal controls",
         "control deficiency", "regulatory enforcement",
-        "model risk", "financial crime",
+        "model risk", "financial crime", "basel",
     ]:
         if term in text:
-            score += 10
+            score += 12
 
     return min(score, 100)
 
 
+def extract_matched_tags(text):
+    """Extract key detected audit/governance topics as tags."""
+    matched = []
+    key_topics = [
+        ("Internal Controls", "Internal-Controls"),
+        ("Audit Committee", "Audit-Committee"),
+        ("Model Risk", "Model-Risk"),
+        ("Basel", "Basel-Prudential"),
+        ("AML", "AML/KYC"),
+        ("Compliance", "Compliance"),
+        ("Core Banking", "Core-Banking"),
+        ("Digital Transformation", "Transformation"),
+        ("Regulatory Enforcement", "Enforcement"),
+        ("Governance", "Governance"),
+    ]
+    for phrase, tag in key_topics:
+        if phrase.lower() in text:
+            matched.append(tag)
+        if len(matched) >= 3:
+            break
+    if not matched:
+        matched.append("Banking-Audit")
+    return matched
+
+
 def classify_article(article):
-    """Classify using transparent keyword scoring."""
+    """Classify using keyword matching."""
     text = normalize_text(article)
     scores = {}
 
     for category, terms in CATEGORY_TERMS.items():
-        score = 0
-        for term in terms:
-            if term in text:
-                score += 1
+        score = sum(1 for term in terms if term in text)
         scores[category] = score
 
     best_category = max(scores, key=scores.get)
@@ -395,7 +623,7 @@ def classify_article(article):
 
 
 def fetch_category(category, query, api_key, from_date, page_size):
-    """Fetch one category from NewsAPI."""
+    """Fetch targeted stream from NewsAPI."""
     url = "https://newsapi.org/v2/everything"
     params = {
         "q": query,
@@ -424,7 +652,7 @@ def fetch_category(category, query, api_key, from_date, page_size):
 @st.cache_data(ttl=300, show_spinner=False)
 def load_news(api_key, lookback_days, page_size):
     """
-    Fetch all targeted banking searches in parallel.
+    Fetch all 4 targeted banking categories concurrently.
     Cached for 5 minutes.
     """
     from_date = (
@@ -454,7 +682,7 @@ def load_news(api_key, lookback_days, page_size):
             except Exception as exc:
                 errors.append(f"{category}: {exc}")
 
-    # Deduplicate by URL first, then by normalized title
+    # Deduplicate by URL and normalized title
     unique = {}
     title_keys = set()
 
@@ -474,11 +702,11 @@ def load_news(api_key, lookback_days, page_size):
         text = normalize_text(article)
         relevance = audit_relevance(text)
 
-        # Only retain stories with a meaningful audit/risk/control signal
         if relevance < 5:
             continue
 
         category, category_score = classify_article(article)
+        matched_tags = extract_matched_tags(text)
 
         source = article.get("source") or {}
         published = article.get("publishedAt") or ""
@@ -487,12 +715,12 @@ def load_news(api_key, lookback_days, page_size):
             "category": category,
             "audit_relevance": relevance,
             "category_score": category_score,
-            "title": article.get("title") or "Untitled",
+            "title": article.get("title") or "Untitled Intelligence Record",
             "description": article.get("description") or "",
             "source": source.get("name") or "Institutional Source",
             "publishedAt": published,
             "url": article.get("url") or "",
-            "author": article.get("author") or "",
+            "tags": matched_tags,
         })
 
     cleaned.sort(key=lambda x: (x["audit_relevance"], x["publishedAt"]), reverse=True)
@@ -500,7 +728,7 @@ def load_news(api_key, lookback_days, page_size):
 
 
 def format_relative_time(pub_date_str):
-    """Formats relative date nicely (e.g. '3 days ago', '1 week ago')."""
+    """Format timestamps into clean relative format."""
     if not pub_date_str:
         return "Recent"
     try:
@@ -512,26 +740,33 @@ def format_relative_time(pub_date_str):
         if days == 0:
             return "Today"
         elif days == 1:
-            return "1 day ago"
+            return "1d ago"
         elif days < 7:
-            return f"{days} days ago"
+            return f"{days}d ago"
         elif days < 14:
-            return "1 week ago"
+            return "1w ago"
         else:
-            return f"{days // 7} weeks ago"
+            return f"{days // 7}w ago"
     except Exception:
         return pub_date_str[:10] if len(pub_date_str) >= 10 else "Recent"
 
 
 # ---------------------------------------------------------
-# 4. SIDEBAR: CLEAN MINIMAL CONTROLS (NO THRESHOLD SCROLLBAR)
+# 4. SIDEBAR: FUTURISTIC COMMAND PANEL
 # ---------------------------------------------------------
 
 with st.sidebar:
     st.markdown("""
-    <div style="padding-top: 4px; margin-bottom: 16px;">
-        <div style="font-family: 'Newsreader', Georgia, serif; font-size: 22px; font-weight: 600; color: #18181B;">Audit Intel</div>
-        <div style="font-size: 11.5px; color: #B45309; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;">Banking Surveillance Briefing</div>
+    <div style="padding: 6px 0 16px 0; border-bottom: 1px solid rgba(56, 189, 248, 0.15); margin-bottom: 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 14px rgba(56, 189, 248, 0.2);">
+                🏛️
+            </div>
+            <div>
+                <div style="font-size: 16px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px;">APEX INTELLIGENCE</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #38BDF8; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;">BANKING AUDIT TELEMETRY</div>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -539,13 +774,13 @@ with st.sidebar:
 
     if not api_key:
         api_key = st.text_input(
-            "NewsAPI Key",
+            "NEWSAPI CREDENTIALS",
             type="password",
             placeholder="Enter API key...",
-            help="Configurable via secrets.toml or enter here for the session.",
+            help="Configure API_KEY in Streamlit secrets or supply temporary key.",
         )
 
-    st.markdown("<hr style='margin: 12px 0;' />", unsafe_allow_html=True)
+    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
 
     lookback_days = st.slider(
         "Lookback Window (Days)",
@@ -555,7 +790,7 @@ with st.sidebar:
     )
 
     page_size = st.slider(
-        "Stories Per Category",
+        "Ingestion Depth (Per Stream)",
         min_value=10,
         max_value=100,
         value=50,
@@ -563,24 +798,23 @@ with st.sidebar:
     )
 
     selected_categories = st.multiselect(
-        "Active Categories",
+        "Surveillance Sectors",
         options=list(CATEGORIES.keys()),
         default=list(CATEGORIES.keys()),
     )
 
-    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-    refresh = st.button("Update Briefing", use_container_width=True)
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+    refresh = st.button("Initiate Radar Sweep", use_container_width=True)
 
-    st.markdown("<hr style='margin: 20px 0;' />", unsafe_allow_html=True)
     st.markdown("""
-    <div style="font-size: 12px; color: #78716C; line-height: 1.55;">
-        <b>Scope of Surveillance:</b><br/>
-        Internal Audit, Board Governance, Basel Prudential Supervision, RBI Directions, Executive Appointments, and Large Bank Controls.
+    <div style="margin-top: 24px; padding: 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; font-size: 11.5px; color: #94A3B8; line-height: 1.6;">
+        <div style="font-family: 'JetBrains Mono', monospace; color: #38BDF8; font-weight: 700; margin-bottom: 4px; text-transform: uppercase;">Supervisory Scope</div>
+        Continuous tracking across Basel III/IV Prudential Standards, RBI Circulars, SOX 404 Internal Controls, Executive Appointments, and Global SIFI Banks.
     </div>
     """, unsafe_allow_html=True)
 
 if not api_key:
-    st.info("💡 Please enter your NewsAPI key in the sidebar or configure API_KEY in Streamlit secrets.")
+    st.info("⚡ Please enter your NewsAPI key in the sidebar command panel or configure it in Streamlit secrets.")
     st.stop()
 
 
@@ -589,7 +823,7 @@ if not api_key:
 # ---------------------------------------------------------
 
 if refresh or "news_loaded" not in st.session_state:
-    with st.spinner("Compiling this week's audit intelligence briefing..."):
+    with st.spinner("Synchronizing institutional banking surveillance telemetry..."):
         articles, errors = load_news(api_key, lookback_days, page_size)
 
     st.session_state.news = articles
@@ -606,70 +840,98 @@ else:
 
 
 # ---------------------------------------------------------
-# 6. EDITORIAL BRIEFING HEADER & STATS
+# 6. EXECUTIVE HUD HEADER & TELEMETRY STRIP
 # ---------------------------------------------------------
 
 st.markdown(f"""
-<div style="margin-bottom: 20px;">
-    <div class="briefing-tag">AUDIT INTEL</div>
-    <div class="briefing-headline">This week's briefing</div>
-    <div class="briefing-subhead">{len(filtered)} items &nbsp;·&nbsp; updated daily &nbsp;·&nbsp; verified banking internal controls & regulatory surveillance</div>
+<div class="hud-header">
+    <div class="hud-sub-badge">
+        <span class="radar-pulse-dot"></span>
+        <span>GLOBAL BANKING AUDIT INTELLIGENCE &nbsp;//&nbsp; CONTINUOUS TELEMETRY</span>
+    </div>
+    <div class="hud-title">
+        <span>Institutional Risk & Assurance Radar</span>
+        <span class="hud-live-tag">LIVE HUD</span>
+    </div>
+    <div class="hud-desc">
+        Real-time strategic surveillance engine curated for Board Audit Committees, Chief Risk Officers, and Senior Regulatory Assurance Leaders.
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Clean KPI Stat Strip (4 banking categories + Total)
+# HUD Metrics Flight Deck
 m1, m2, m3, m4, m5 = st.columns(5)
+total_count = len(filtered)
 with m1:
     st.markdown(f"""
-    <div class="editorial-metric">
-        <div class="metric-label">Total Briefing</div>
-        <div class="metric-count">{len(filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label-mono">TOTAL SIGNALS</div>
+        <div class="metric-value-display">
+            <span>{total_count}</span>
+            <span class="metric-sub">ACT</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with m2:
+    trans_count = sum(a["category"] == "Transformation" for a in filtered)
     st.markdown(f"""
-    <div class="editorial-metric">
-        <div class="metric-label">Transformation</div>
-        <div class="metric-count">{sum(a["category"] == "Transformation" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label-mono" style="color: #38BDF8;">TRANSFORMATION</div>
+        <div class="metric-value-display">
+            <span>{trans_count}</span>
+            <span class="metric-sub">CORE</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with m3:
+    reg_count = sum(a["category"] == "Regulation" for a in filtered)
     st.markdown(f"""
-    <div class="editorial-metric">
-        <div class="metric-label">Regulation</div>
-        <div class="metric-count">{sum(a["category"] == "Regulation" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label-mono" style="color: #FBBF24;">REGULATION</div>
+        <div class="metric-value-display">
+            <span>{reg_count}</span>
+            <span class="metric-sub">BASEL</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with m4:
+    people_count = sum(a["category"] == "People" for a in filtered)
     st.markdown(f"""
-    <div class="editorial-metric">
-        <div class="metric-label">People</div>
-        <div class="metric-count">{sum(a["category"] == "People" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label-mono" style="color: #A78BFA;">PEOPLE / BOARD</div>
+        <div class="metric-value-display">
+            <span>{people_count}</span>
+            <span class="metric-sub">LEAD</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with m5:
+    global_count = sum(a["category"] == "Global Banks" for a in filtered)
     st.markdown(f"""
-    <div class="editorial-metric">
-        <div class="metric-label">Global Banks</div>
-        <div class="metric-count">{sum(a["category"] == "Global Banks" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label-mono" style="color: #34D399;">GLOBAL SIFIs</div>
+        <div class="metric-value-display">
+            <span>{global_count}</span>
+            <span class="metric-sub">TIER-1</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
 if errors:
-    with st.expander("Feed Diagnostic Notices", expanded=False):
+    with st.expander("Telemetry Diagnostic Alerts", expanded=False):
         for err in errors:
-            st.markdown(f"<div style='font-size: 12px; color: #B45309;'>• {err}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-family: monospace; font-size: 12px; color: #FBBF24;'>[NOTICE] {err}</div>", unsafe_allow_html=True)
 
 # Instant Search Bar
 search_query = st.text_input(
-    "Filter Briefing",
-    placeholder="Search briefing (e.g. HDFC, Basel, RBI, JPMorgan, Internal Audit)...",
+    "Filter Intelligence Telemetry",
+    placeholder="Search telemetry by bank (JPMorgan, HSBC), regulator (RBI, Basel, ECB), or control deficiency...",
     label_visibility="collapsed"
 )
 
@@ -682,52 +944,76 @@ if search_query:
 
 
 # ---------------------------------------------------------
-# 7. EDITORIAL PILL TABS & BRIEFING CARDS
+# 7. HIGH-TECH TABS & INTELLIGENCE DOSSIER CARDS
 # ---------------------------------------------------------
 
 if not filtered:
     st.markdown("""
-    <div style="text-align: center; padding: 48px; background: #FFFFFF; border-radius: 16px; border: 1px dashed #E6E1D7; margin-top: 14px;">
-        <div style="font-family: 'Newsreader', Georgia, serif; font-size: 20px; font-weight: 600; color: #18181B;">No briefing stories found</div>
-        <div style="font-size: 14px; color: #78716C; margin-top: 6px;">Try expanding the lookback window or broadening search keywords in the sidebar.</div>
+    <div style="text-align: center; padding: 50px; background: rgba(15, 23, 42, 0.6); border-radius: 16px; border: 1px dashed rgba(56, 189, 248, 0.2); margin-top: 14px;">
+        <div style="font-size: 18px; font-weight: 700; color: #F8FAFC;">No telemetry records matching criteria</div>
+        <div style="font-size: 13.5px; color: #94A3B8; margin-top: 6px;">Adjust search keywords or expand lookback days in the sidebar command panel.</div>
     </div>
     """, unsafe_allow_html=True)
 else:
-    tabs = st.tabs(["All"] + [f"{c}" for c in selected_categories])
+    tabs = st.tabs(["All Telemetry"] + [f"{c}" for c in selected_categories])
 
-    def render_briefing_cards(rows):
+    def render_dossier_stream(rows):
         for art in rows:
             cat = art["category"]
+            cat_icon = CATEGORIES.get(cat, {}).get("icon", "🏛️")
             rel_time = format_relative_time(art["publishedAt"])
-            source_title = art["source"]
             score = art["audit_relevance"]
 
-            description_text = art["description"] if art["description"] else "Independent institutional briefing coverage. Select below to review the full verified source documentation."
+            # HUD Score styling
+            if score >= 75:
+                score_class = "score-urgent"
+                score_label = "CRITICAL FINDING"
+            elif score >= 50:
+                score_class = "score-elevated"
+                score_label = "ELEVATED WATCH"
+            else:
+                score_class = "score-standard"
+                score_label = "STANDARD ASSURANCE"
+
+            description_text = art["description"] if art["description"] else "No extended abstract provided by source dispatch. Access verified primary source below."
+
+            tags_html = "".join([f'<span class="tag-chip">#{tag}</span>' for tag in art.get("tags", [])])
 
             st.markdown(f"""
-            <div class="article-briefing-card">
-                <div class="card-top-row">
-                    <div class="icon-badge">
-                        <span>🛡️</span>
+            <div class="dossier-card">
+                <div class="card-meta-bar">
+                    <div class="source-identity">
+                        <div class="source-emblem">{cat_icon}</div>
+                        <div>
+                            <span class="source-name-text">{art['source']}</span>
+                            <span style="color: #475569; margin: 0 6px;">•</span>
+                            <span class="source-timestamp">{rel_time}</span>
+                        </div>
                     </div>
-                    <div class="meta-text-top">
-                        <span class="category-time">{cat} &nbsp;·&nbsp; {rel_time}</span>
-                        <span class="source-name">{source_title}</span>
+                    <div class="relevance-hud">
+                        <span class="category-chip">{cat}</span>
+                        <span class="relevance-pill {score_class}">
+                            <span>●</span>
+                            <span>{score_label} &nbsp;{score}/100</span>
+                        </span>
                     </div>
                 </div>
-                <div class="card-title-text">
+                <div class="card-headline">
                     {art['title']}
                 </div>
-                <div class="card-summary-text">
+                <div class="card-narrative">
                     {description_text}
                 </div>
-                <div class="card-footer-row">
-                    <div>
-                        <span class="tag-badge">Audit Score: {score}/100</span>
+                <div class="risk-factors-row">
+                    {tags_html}
+                </div>
+                <div class="card-footer">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #64748B;">
+                        STATUS: VERIFIED TELEMETRY
                     </div>
                     <div>
-                        <a href="{art['url']}" target="_blank" class="read-source-link">
-                            <span>Read source</span>
+                        <a href="{art['url']}" target="_blank" class="action-link-btn">
+                            <span>Inspect Source Dossier</span>
                             <span style="font-size: 14px;">↗</span>
                         </a>
                     </div>
@@ -736,30 +1022,30 @@ else:
             """, unsafe_allow_html=True)
 
     with tabs[0]:
-        render_briefing_cards(filtered)
+        render_dossier_stream(filtered)
 
     for tab, category in zip(tabs[1:], selected_categories):
         with tab:
             cat_rows = [a for a in filtered if a["category"] == category]
             if not cat_rows:
                 st.markdown(f"""
-                <div style="text-align: center; padding: 36px; background: #FFFFFF; border-radius: 16px; border: 1px dashed #E6E1D7;">
-                    <div style="font-family: 'Newsreader', Georgia, serif; font-size: 16px; color: #78716C;">No items currently logged under {category}</div>
+                <div style="text-align: center; padding: 36px; background: rgba(15, 23, 42, 0.6); border-radius: 14px; border: 1px dashed rgba(255, 255, 255, 0.08);">
+                    <div style="font-size: 14px; color: #94A3B8;">No records logged under {category}</div>
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                render_briefing_cards(cat_rows)
+                render_dossier_stream(cat_rows)
 
 
 # ---------------------------------------------------------
-# 8. EXPORT SECTION
+# 8. EXECUTIVE EXPORT & FOOTER
 # ---------------------------------------------------------
-st.markdown("<hr style='margin-top: 36px; border-color: #E6E1D7;' />", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 36px; border-color: rgba(255, 255, 255, 0.08);' />", unsafe_allow_html=True)
 col_down1, col_down2 = st.columns([8, 2])
 with col_down1:
     st.markdown("""
-    <div style="font-size: 12.5px; color: #78716C;">
-        Audit Intel Briefing • Curated intelligence feed for Audit Committees and Chief Risk Officers
+    <div style="font-size: 12px; color: #64748B; font-family: 'JetBrains Mono', monospace;">
+        APEX BANKING INTELLIGENCE RADAR • CONFIDENTIAL EXECUTIVE TELEMETRY FOR INTERNAL AUDIT & RISK COMMITTEES
     </div>
     """, unsafe_allow_html=True)
 with col_down2:
@@ -767,9 +1053,9 @@ with col_down2:
         df_export = pd.DataFrame(filtered)
         csv = df_export.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="Download CSV",
+            label="Download Dossier (CSV)",
             data=csv,
-            file_name=f"audit_intel_briefing_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.csv",
+            file_name=f"banking_audit_dossier_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.csv",
             mime="text/csv",
             use_container_width=True
         )
