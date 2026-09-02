@@ -1,236 +1,47 @@
-"""
-Global Banking Audit Intelligence Terminal
-A futuristic, production-ready Streamlit application for Audit, Risk, Controls & Compliance departments in banking.
-"""
-
 import os
-import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Dict, List, Tuple, Any
+from urllib.parse import urlparse
 
-import streamlit as st
 import pandas as pd
 import requests
+import streamlit as st
 
-# -----------------------------------------------------------------------------
-# 1. PAGE CONFIG & FUTURISTIC BANKING TERMINAL THEME
-# -----------------------------------------------------------------------------
+try:
+    from config import API_KEY as CONFIG_API_KEY
+except ImportError:
+    CONFIG_API_KEY = ""
+
+
+# ---------------------------------------------------------
+# APP CONFIGURATION
+# ---------------------------------------------------------
+
 st.set_page_config(
-    page_title="AUDIT INTELLIGENCE // BANK TERMINAL",
+    page_title="Global Banking Audit Intelligence",
     page_icon="🏦",
     layout="wide",
-    initial_sidebar_state="expanded"
 )
 
-# Custom Cyber-Obsidian Banking Terminal CSS
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@300;400;600;700&display=swap');
-
-    /* Global Theme Overrides */
-    .stApp {
-        background-color: #06090F;
-        color: #F1F5F9;
-        font-family: 'Inter', sans-serif;
-    }
-
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #0B101E;
-        border-right: 1px solid rgba(0, 229, 255, 0.15);
-    }
-    [data-testid="stSidebar"] hr {
-        border-color: rgba(0, 229, 255, 0.15);
-    }
-
-    /* Monospace Terminal Headers */
-    h1, h2, h3, .terminal-mono {
-        font-family: 'JetBrains Mono', monospace !important;
-        letter-spacing: -0.5px;
-    }
-
-    /* Futuristic HUD Header */
-    .hud-container {
-        background: linear-gradient(135deg, #0B132B 0%, #0D1B3E 50%, #06090F 100%);
-        border: 1px solid rgba(0, 229, 255, 0.3);
-        border-radius: 12px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 0 25px rgba(0, 229, 255, 0.08);
-        position: relative;
-        overflow: hidden;
-    }
-    .hud-container::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #00E5FF, #38BDF8, #8B5CF6);
-    }
-    .hud-title {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 24px;
-        font-weight: 800;
-        color: #FFFFFF;
-        letter-spacing: 2px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .hud-badge {
-        background: rgba(0, 229, 255, 0.15);
-        border: 1px solid rgba(0, 229, 255, 0.5);
-        color: #00E5FF;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
-    .live-pulse {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background-color: #10B981;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #10B981;
-        animation: pulse 1.8s infinite;
-        margin-right: 6px;
-    }
-    @keyframes pulse {
-        0% { opacity: 0.4; }
-        50% { opacity: 1; }
-        100% { opacity: 0.4; }
-    }
-
-    /* Metric Cards */
-    .metric-card {
-        background: #0D1424;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 8px;
-        padding: 14px 18px;
-        text-align: left;
-    }
-    .metric-label {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        color: #94A3B8;
-        letter-spacing: 1px;
-        margin-bottom: 4px;
-    }
-    .metric-value {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 22px;
-        font-weight: 700;
-        color: #FFFFFF;
-    }
-
-    /* Article Cards */
-    .article-card {
-        background-color: #0D1424;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 10px;
-        padding: 18px;
-        margin-bottom: 16px;
-        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .article-card:hover {
-        border-color: rgba(0, 229, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 229, 255, 0.08);
-    }
-    .cat-chip {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 4px;
-        letter-spacing: 0.5px;
-        display: inline-block;
-    }
-    .score-chip {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        padding: 3px 8px;
-        border-radius: 4px;
-        display: inline-block;
-    }
-    .score-critical {
-        background: rgba(244, 63, 94, 0.15);
-        border: 1px solid rgba(244, 63, 94, 0.5);
-        color: #F43F5E;
-    }
-    .score-elevated {
-        background: rgba(245, 158, 11, 0.15);
-        border: 1px solid rgba(245, 158, 11, 0.5);
-        color: #F59E0B;
-    }
-    .score-monitor {
-        background: rgba(0, 229, 255, 0.15);
-        border: 1px solid rgba(0, 229, 255, 0.5);
-        color: #00E5FF;
-    }
-
-    .tag-chip {
-        background: #1B2744;
-        border: 1px solid rgba(0, 229, 255, 0.2);
-        color: #38BDF8;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        padding: 2px 7px;
-        border-radius: 4px;
-        margin-right: 5px;
-        margin-bottom: 4px;
-        display: inline-block;
-    }
-
-    /* Buttons & Inputs */
-    .stTextInput>div>div>input {
-        background-color: #0D1424 !important;
-        border: 1px solid rgba(56, 189, 248, 0.3) !important;
-        color: #FFFFFF !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        border-radius: 8px !important;
-    }
-    .stButton>button {
-        background: linear-gradient(135deg, #0284C7, #0369A1);
-        color: white;
-        border: 1px solid rgba(56, 189, 248, 0.4);
-        border-radius: 8px;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 600;
-        transition: all 0.2s ease;
-    }
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #00E5FF, #0284C7);
-        color: #06090F;
-        border-color: #00E5FF;
-        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-    }
-</style>
-""", unsafe_allow_html=True)
-
-# -----------------------------------------------------------------------------
-# 2. AUDIT CLASSIFIER & DOMAIN SCORING ENGINE
-# -----------------------------------------------------------------------------
 CATEGORIES = {
-    "Transformation": '("bank" OR "banking") AND ("digital transformation" OR "core banking" OR "automation" OR "AI" OR "cloud" OR "modernization")',
-    "Regulation": '("bank" OR "banking") AND ("regulation" OR "regulatory" OR "supervision" OR "compliance" OR "RBI" OR "Basel" OR "AML" OR "sanctions")',
-    "People": '("bank" OR "banking") AND ("appointed" OR "appointment" OR "CEO" OR "CRO" OR "CISO" OR "Chief Audit" OR "Audit Committee" OR "Board")',
-    "Cyber and Tech": '("bank" OR "banking") AND ("cybersecurity" OR "cyber" OR "data breach" OR "ransomware" OR "technology risk" OR "IT audit")',
-    "Global Banks": '("JPMorgan" OR "Citigroup" OR "HSBC" OR "Barclays" OR "Deutsche Bank" OR "UBS" OR "Bank of America" OR "Wells Fargo") AND ("risk" OR "audit" OR "compliance" OR "regulatory")'
+    "Transformation": {
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance") AND ("digital transformation" OR "modernization" OR "core banking" OR "automation" OR "artificial intelligence" OR "generative AI" OR "cloud")'
+    },
+    "Regulation": {
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "compliance" OR "risk" OR "governance") AND ("regulation" OR "regulatory" OR "supervision" OR "RBI" OR "Basel" OR "AML" OR "KYC" OR "sanctions" OR "prudential" OR "enforcement")'
+    },
+    "People": {
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "risk" OR "governance" OR "controls") AND ("appointed" OR "appointment" OR "CEO" OR "CFO" OR "CRO" OR "CISO" OR "chief audit" OR "internal audit" OR "audit committee" OR "board")'
+    },
+    "Cyber and Tech": {
+        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "IT controls" OR "risk" OR "governance") AND ("cybersecurity" OR "cyber attack" OR "ransomware" OR "data breach" OR "information security" OR "technology risk" OR "IT audit" OR "cloud security" OR "AI governance" OR "model risk")'
+    },
+    "Global Banks": {
+        "query": '("bank" OR "banking group" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance" OR "regulatory") AND ("HSBC" OR "JPMorgan" OR "JPMorgan Chase" OR "Citi" OR "Citigroup" OR "Barclays" OR "Deutsche Bank" OR "UBS" OR "BNP Paribas" OR "Santander" OR "Standard Chartered" OR "Bank of America" OR "Goldman Sachs" OR "Morgan Stanley" OR "Wells Fargo" OR "ING" OR "ICBC" OR "MUFG" OR "Mizuho")'
+    },
 }
 
-CATEGORY_COLORS = {
-    "Transformation": "#00E5FF",
-    "Regulation": "#F59E0B",
-    "People": "#8B5CF6",
-    "Cyber and Tech": "#F43F5E",
-    "Global Banks": "#10B981"
-}
-
+# Extra audit vocabulary is used to remove ordinary banking stories.
 AUDIT_TERMS = [
     "internal audit", "external audit", "audit committee", "auditor",
     "audit finding", "audit findings", "internal control", "internal controls",
@@ -239,13 +50,7 @@ AUDIT_TERMS = [
     "model risk", "compliance", "regulatory", "regulation", "supervision",
     "supervisory", "enforcement", "aml", "anti-money laundering", "kyc",
     "sanctions", "cybersecurity", "cyber security", "it audit", "technology risk",
-    "data breach", "ransomware", "fraud", "misconduct", "financial crime"
-]
-
-HIGH_WEIGHT_TERMS = [
-    "internal audit", "audit committee", "internal controls",
-    "control deficiency", "regulatory enforcement", "it audit",
-    "technology risk", "financial crime"
+    "data breach", "ransomware", "fraud", "misconduct", "financial crime",
 ]
 
 CATEGORY_TERMS = {
@@ -253,501 +58,344 @@ CATEGORY_TERMS = {
         "digital transformation", "modernization", "modernisation", "core banking",
         "automation", "artificial intelligence", "generative ai", "genai",
         "machine learning", "cloud", "digital banking", "technology transformation",
-        "operating model"
+        "operating model",
     ],
     "Regulation": [
         "regulation", "regulatory", "rbi", "basel", "prudential", "supervision",
         "supervisory", "enforcement", "aml", "anti-money laundering", "kyc",
-        "sanctions", "capital requirements", "regulatory capital", "compliance"
+        "sanctions", "capital requirements", "regulatory capital", "compliance",
     ],
     "People": [
         "appointed", "appointment", "ceo", "cfo", "cro", "ciso", "chief audit",
         "internal audit", "audit committee", "board", "director", "chairman",
-        "chairwoman", "leadership", "executive"
+        "chairwoman", "leadership", "executive",
     ],
     "Cyber and Tech": [
         "cybersecurity", "cyber security", "cyber attack", "ransomware",
         "data breach", "information security", "technology risk", "it audit",
-        "cloud security", "ai governance", "model risk", "digital", "technology"
+        "cloud security", "ai governance", "model risk", "digital", "technology",
     ],
     "Global Banks": [
         "hsbc", "jpmorgan", "jpmorgan chase", "citi", "citigroup", "barclays",
         "deutsche bank", "ubs", "bnpparibas", "bnp paribas", "santander",
         "standard chartered", "bank of america", "goldman sachs", "morgan stanley",
-        "wells fargo", "ing", "icbc", "mufg", "mizuho"
-    ]
+        "wells fargo", "ing", "icbc", "mufg", "mizuho",
+    ],
 }
 
-def audit_relevance(text: str) -> Tuple[int, List[str]]:
-    """Calculates audit relevance score (0-100) and extracts matched terms."""
+
+def get_api_key():
+    """Use Streamlit secrets/env first; sidebar entry is the local fallback."""
+    if CONFIG_API_KEY.strip():
+        return CONFIG_API_KEY.strip()
+
+    env_key = os.getenv("NEWSAPI_KEY", "").strip()
+    if env_key:
+        return env_key
+
+    try:
+        secret_key = st.secrets.get("API_KEY", "") or st.secrets.get("NEWSAPI_KEY", "")
+        if secret_key:
+            return str(secret_key).strip()
+    except Exception:
+        pass
+
+    return ""
+
+
+def normalize_text(article):
+    fields = [
+        article.get("title") or "",
+        article.get("description") or "",
+        article.get("content") or "",
+    ]
+    return " ".join(fields).lower()
+
+
+def audit_relevance(text):
+    """Simple, fast, transparent audit relevance score: 0-100."""
     score = 0
-    matched = []
-    text_lower = text.lower()
     for term in AUDIT_TERMS:
-        if term in text_lower:
+        if term in text:
             score += 5
-            matched.append(term)
-    for term in HIGH_WEIGHT_TERMS:
-        if term in text_lower:
+
+    # Stronger signals get additional weight.
+    for term in [
+        "internal audit", "audit committee", "internal controls",
+        "control deficiency", "regulatory enforcement", "it audit",
+        "technology risk", "financial crime",
+    ]:
+        if term in text:
             score += 10
-    return min(score, 100), list(set(matched))
 
-def classify_article(text: str) -> Tuple[str, int]:
-    """Classifies an article into the highest scoring audit category."""
-    text_lower = text.lower()
+    return min(score, 100)
+
+
+def classify_article(article):
+    """Classify using transparent keyword scoring; no paid LLM is required."""
+    text = normalize_text(article)
     scores = {}
-    for cat, terms in CATEGORY_TERMS.items():
-        cat_score = sum(1 for term in terms if term in text_lower)
-        scores[cat] = cat_score
-    best_cat = max(scores, key=scores.get) if scores else "Regulation"
-    return (best_cat, scores.get(best_cat, 0)) if scores.get(best_cat, 0) > 0 else ("Regulation", 0)
 
-# -----------------------------------------------------------------------------
-# 3. CURATED AUDIT INTELLIGENCE DATABASE (VERIFIED REAL-WORLD FEEDS)
-# -----------------------------------------------------------------------------
-CURATED_ARTICLES = [
-    {
-        "title": "Basel Committee Flags Multi-Cloud Outage Exposure and Technology Risk in Tier-1 Bank Internal Controls",
-        "source": "Bank for International Settlements",
-        "url": "https://www.bis.org/press/p240901.htm",
-        "publishedAt": "2026-09-02T10:30:00Z",
-        "description": "Prudential supervisors and the Basel Committee on Banking Supervision issued fresh supervisory guidance mandating operational resilience testing and independent IT audit reviews over core banking architectures.",
-        "category": "Regulation",
-        "auditRelevance": 90,
-        "matchedTerms": ["basel", "prudential", "supervision", "internal controls", "it audit", "technology risk"]
-    },
-    {
-        "title": "Federal Reserve Sanctions Global Investment Bank Over Transaction Monitoring Deficiencies",
-        "source": "Wall Street Journal",
-        "url": "https://www.wsj.com/articles/fed-aml-enforcement-banking-2026",
-        "publishedAt": "2026-09-02T08:15:00Z",
-        "description": "Supervisory enforcement notice cites repeated internal control weaknesses in automated AML surveillance, sanctions screening thresholds, and correspondent account verification.",
-        "category": "Regulation",
-        "auditRelevance": 95,
-        "matchedTerms": ["regulatory enforcement", "aml", "anti-money laundering", "sanctions", "control deficiency", "internal controls"]
-    },
-    {
-        "title": "JPMorgan Chase Revamps Internal Audit Protocols for Generative AI and Algorithmic Model Risk",
-        "source": "Financial Times",
-        "url": "https://www.jpmorganchase.com/news",
-        "publishedAt": "2026-09-01T15:45:00Z",
-        "description": "Wall Street's largest bank deploys continuous automated auditing models to supervise AI governance and prevent control deficiencies in automated credit and fraud surveillance engines.",
-        "category": "Global Banks",
-        "auditRelevance": 90,
-        "matchedTerms": ["internal audit", "internal controls", "model risk", "control deficiency", "fraud", "governance"]
-    },
-    {
-        "title": "RBI Directs Supervised Banks to Rectify IT Audit Weaknesses in Core Banking Ledger Migration",
-        "source": "Economic Times",
-        "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx",
-        "publishedAt": "2026-09-01T11:20:00Z",
-        "description": "The Reserve Bank of India mandates quarterly board and audit committee attestations for core banking modernization following supervisory findings on cyber resilience and ledger integrity.",
-        "category": "Transformation",
-        "auditRelevance": 85,
-        "matchedTerms": ["audit committee", "it audit", "control weakness", "regulatory enforcement", "rbi", "core banking"]
-    },
-    {
-        "title": "Barclays Deploys Agentic Workflow Automation in Risk Assurance and Continuous Internal Controls",
-        "source": "Banking Technology",
-        "url": "https://home.barclays/news",
-        "publishedAt": "2026-09-01T09:00:00Z",
-        "description": "Modernizing banking inspection workflows, Barclays digital transformation teams partner with internal audit to cut sample validation cycle times using continuous automated testing of core ledger authorizations.",
-        "category": "Transformation",
-        "auditRelevance": 80,
-        "matchedTerms": ["internal controls", "automation", "core banking", "governance", "digital transformation"]
-    },
-    {
-        "title": "Ransomware Infiltration of SaaS Provider Triggers Emergency Cyber Risk Audit Across European Lenders",
-        "source": "CyberScoop Finance",
-        "url": "https://www.reuters.com/technology/cyber-incident-banking",
-        "publishedAt": "2026-08-31T17:30:00Z",
-        "description": "Chief Information Security Officers and IT Audit leads initiated emergency vendor audit rights and digital forensics assessments after third-party software provider reports unauthorized credential access.",
-        "category": "Cyber and Tech",
-        "auditRelevance": 85,
-        "matchedTerms": ["it audit", "technology risk", "cybersecurity", "ransomware", "data breach", "internal controls"]
-    },
-    {
-        "title": "HSBC Board Appoints New Chief Audit Executive Amid Comprehensive Governance Realignment",
-        "source": "Bloomberg Law",
-        "url": "https://www.hsbc.com/news-and-media",
-        "publishedAt": "2026-08-31T14:10:00Z",
-        "description": "Reporting directly to the Chair of the Audit Committee and functionally to the Group CEO, the new Chief Audit Executive will lead over 1,200 audit professionals overseeing global sanctions, AML, and operational resilience.",
-        "category": "People",
-        "auditRelevance": 80,
-        "matchedTerms": ["internal audit", "audit committee", "chief audit", "financial crime", "sanctions", "governance"]
-    },
-    {
-        "title": "Citigroup Completes Remediation Milestone on Automated Ledger Controls Following Consent Order",
-        "source": "Wall Street Journal",
-        "url": "https://www.citigroup.com/citi/news",
-        "publishedAt": "2026-08-30T16:00:00Z",
-        "description": "The institution delivers its quarterly verification report to prudential supervisors confirming progress in replacing legacy manual reconciliations with automated internal controls across corporate banking ledgers.",
-        "category": "Global Banks",
-        "auditRelevance": 75,
-        "matchedTerms": ["audit committee", "external audit", "internal controls", "supervision", "governance"]
-    },
-    {
-        "title": "Global Banking Consortium Establishes Real-Time Ransomware Incident Response Protocol",
-        "source": "Dark Reading",
-        "url": "https://www.darkreading.com/threat-intelligence/financial-ransomware-audit-protocol",
-        "publishedAt": "2026-08-30T12:00:00Z",
-        "description": "Participating institutions must subject third-party vendor interfaces and Swift connectivity gateways to bi-annual adversarial penetration tests and independent IT audit scrutiny.",
-        "category": "Cyber and Tech",
-        "auditRelevance": 85,
-        "matchedTerms": ["cybersecurity", "ransomware", "it audit", "technology risk", "governance"]
-    },
-    {
-        "title": "Morgan Stanley & Goldman Sachs Refresh Model Risk Governance Frameworks for Private Credit",
-        "source": "Financial Review",
-        "url": "https://www.morganstanley.com/press-releases",
-        "publishedAt": "2026-08-29T10:45:00Z",
-        "description": "Investment banking audit committees approve elevated stress-testing requirements to address illiquid asset valuations and valuation control deficiencies under Federal Reserve scrutiny.",
-        "category": "People",
-        "auditRelevance": 70,
-        "matchedTerms": ["audit committee", "model risk", "control deficiency", "governance", "risk management"]
+    for category, terms in CATEGORY_TERMS.items():
+        score = 0
+        for term in terms:
+            if term in text:
+                score += 1
+        scores[category] = score
+
+    best_category = max(scores, key=scores.get)
+    if scores[best_category] == 0:
+        best_category = "Regulation"
+
+    return best_category, scores[best_category]
+
+
+def fetch_category(category, query, api_key, from_date, page_size):
+    """Fetch one category from NewsAPI."""
+    url = "https://newsapi.org/v2/everything"
+    params = {
+        "q": query,
+        "from": from_date,
+        "language": "en",
+        "sortBy": "publishedAt",
+        "pageSize": page_size,
+        "apiKey": api_key,
     }
-]
 
-# -----------------------------------------------------------------------------
-# 4. NEWS RETRIEVAL PIPELINE (PARALLEL FETCHING)
-# -----------------------------------------------------------------------------
-@st.cache_data(ttl=900, show_spinner=False)
-def fetch_news_api(
-    api_key: str,
-    categories_to_fetch: List[str],
-    lookback_days: int = 3,
-    page_size: int = 50
-) -> Tuple[List[Dict[str, Any]], List[str]]:
-    """Fetches and deduplicates banking news across categories in parallel."""
-    if not api_key:
-        return CURATED_ARTICLES, ["Notice: Operating on verified institutional audit intelligence feed (No API Key provided)."]
+    response = requests.get(url, params=params, timeout=20)
+    response.raise_for_status()
+    payload = response.json()
 
-    from_date = (datetime.utcnow() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
-    raw_articles = []
+    if payload.get("status") != "ok":
+        raise RuntimeError(payload.get("message", "NewsAPI returned an error."))
+
+    rows = []
+    for article in payload.get("articles", []):
+        article["_query_category"] = category
+        rows.append(article)
+
+    return rows
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_news(api_key, lookback_days, page_size):
+    """
+    Fetch all five targeted searches in parallel.
+    Cached for 5 minutes so Streamlit reruns do not repeatedly call NewsAPI.
+    """
+    from_date = (
+        datetime.now(timezone.utc) - timedelta(days=lookback_days)
+    ).strftime("%Y-%m-%d")
+
+    all_articles = []
     errors = []
 
-    def fetch_single_category(cat: str):
-        query = CATEGORIES.get(cat)
-        if not query:
-            return None
-        url = "https://newsapi.org/v2/everything"
-        params = {
-            "q": query,
-            "from": from_date,
-            "sortBy": "publishedAt",
-            "pageSize": page_size,
-            "language": "en",
-            "apiKey": api_key
+    with ThreadPoolExecutor(max_workers=len(CATEGORIES)) as executor:
+        futures = {
+            executor.submit(
+                fetch_category,
+                category,
+                settings["query"],
+                api_key,
+                from_date,
+                page_size,
+            ): category
+            for category, settings in CATEGORIES.items()
         }
-        try:
-            resp = requests.get(url, params=params, timeout=12)
-            data = resp.json()
-            status = data.get("status")
-            if status == "ok":
-                return (cat, data.get("articles", []))
-            else:
-                msg = data.get("message", "API Error")
-                return (cat, Exception(msg))
-        except Exception as e:
-            return (cat, e)
 
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = [executor.submit(fetch_single_category, cat) for cat in categories_to_fetch]
-        for f in as_completed(futures):
-            res = f.result()
-            if res:
-                cat, result = res
-                if isinstance(result, list):
-                    for a in result:
-                        raw_articles.append((cat, a))
-                else:
-                    errors.append(f"{cat}: {str(result)}")
+        for future in as_completed(futures):
+            category = futures[future]
+            try:
+                all_articles.extend(future.result())
+            except Exception as exc:
+                errors.append(f"{category}: {exc}")
 
-    # Deduplicate & Classify
-    seen_urls = set()
-    seen_titles = set()
-    processed_articles = []
+    # Deduplicate by URL first, then by normalized title.
+    unique = {}
+    title_keys = set()
 
-    for expected_cat, art in raw_articles:
-        url = art.get("url", "")
-        title = art.get("title", "")
-        if not url or not title or "[Removed]" in title:
+    for article in all_articles:
+        url = article.get("url") or ""
+        title = (article.get("title") or "").strip().lower()
+        key = url if url else title
+
+        if not key or key in unique or title in title_keys:
             continue
 
-        norm_title = re.sub(r"[^a-zA-Z0-9 ]", "", title).strip().lower()
-        if url in seen_urls or norm_title in seen_titles:
+        unique[key] = article
+        title_keys.add(title)
+
+    cleaned = []
+    for article in unique.values():
+        text = normalize_text(article)
+        relevance = audit_relevance(text)
+
+        # Only retain stories with a meaningful audit/risk/control signal.
+        if relevance < 5:
             continue
-        seen_urls.add(url)
-        seen_titles.add(norm_title)
 
-        desc = art.get("description") or ""
-        content = art.get("content") or ""
-        full_text = f"{title} {desc} {content}".lower()
+        category, category_score = classify_article(article)
 
-        relevance, matched = audit_relevance(full_text)
-        assigned_cat, _ = classify_article(full_text)
-        final_cat = assigned_cat if assigned_cat else expected_cat
+        source = article.get("source") or {}
+        published = article.get("publishedAt") or ""
 
-        processed_articles.append({
-            "title": title,
-            "source": (art.get("source") or {}).get("name") or "Financial News",
-            "url": url,
-            "publishedAt": art.get("publishedAt", ""),
-            "description": desc,
-            "category": final_cat,
-            "auditRelevance": relevance,
-            "matchedTerms": matched
+        cleaned.append({
+            "category": category,
+            "audit_relevance": relevance,
+            "category_score": category_score,
+            "title": article.get("title") or "Untitled",
+            "description": article.get("description") or "",
+            "source": source.get("name") or "Unknown source",
+            "publishedAt": published,
+            "url": article.get("url") or "",
+            "author": article.get("author") or "",
         })
 
-    # If NewsAPI returned very few or zero articles (e.g. rate limit, trial tier restricted dates, query miss)
-    # augment seamlessly with our curated audit stream so the dashboard is rich and populated across all tabs!
-    if len(processed_articles) < 5:
-        for ca in CURATED_ARTICLES:
-            if ca["url"] not in seen_urls and ca["title"].lower() not in seen_titles:
-                processed_articles.append(ca)
+    cleaned.sort(key=lambda x: (x["audit_relevance"], x["publishedAt"]), reverse=True)
+    return cleaned, errors
 
-    # Sort descending by relevance score, then recency
-    processed_articles.sort(key=lambda x: (x["auditRelevance"], x["publishedAt"]), reverse=True)
-    return processed_articles, errors
 
-# -----------------------------------------------------------------------------
-# 5. SIDEBAR: TERMINAL CONTROLS & SECURITY PARAMETERS
-# -----------------------------------------------------------------------------
+# ---------------------------------------------------------
+# STREAMLIT UI
+# ---------------------------------------------------------
+
+st.title("🏦 Global Banking Audit Intelligence")
+st.caption(
+    "Targeted global banking news focused on Audit, Risk, Controls, "
+    "Regulation, Cyber/Technology and Banking Leadership."
+)
+
 with st.sidebar:
-    st.markdown("""
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-        <span style="font-size: 24px;">🛡️</span>
-        <div>
-            <div style="font-family: 'JetBrains Mono'; font-weight: 800; font-size: 14px; color: #FFFFFF;">AEGIS TERMINAL</div>
-            <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: #00E5FF;">BANK RISK TELEMETRY</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.header("⚙️ Search settings")
 
-    # API Configuration
-    default_key = os.environ.get("NEWSAPI_KEY", "")
-    if hasattr(st, "secrets") and "NEWSAPI_KEY" in st.secrets:
-        default_key = st.secrets["NEWSAPI_KEY"]
+    api_key = get_api_key()
 
-    api_key_input = st.text_input(
-        "NEWSAPI_KEY CREDENTIAL",
-        value=default_key,
-        type="password",
-        help="Enter your NewsAPI.org developer key or leave blank to utilize built-in verified institutional audit intelligence."
+    if not api_key:
+        api_key = st.text_input(
+            "NewsAPI key",
+            type="password",
+            help="Your key is used only for this Streamlit session.",
+        )
+
+    lookback_days = st.slider(
+        "Look back (days)",
+        min_value=1,
+        max_value=7,
+        value=3,
     )
 
-    st.markdown("<hr style='margin: 15px 0;' />", unsafe_allow_html=True)
-    st.markdown("<div class='terminal-mono' style='font-size: 11px; color: #94A3B8; font-weight: 700; margin-bottom: 8px;'>SCANNER CONTROLS</div>", unsafe_allow_html=True)
-
-    lookback_days = st.slider("Lookback Window (Days)", min_value=1, max_value=7, value=3)
-    page_size = st.slider("Articles Per Category", min_value=10, max_value=100, value=50, step=10)
-    min_relevance = st.slider("Min Audit Relevance Threshold", min_value=0, max_value=100, value=15, step=5)
+    page_size = st.slider(
+        "Articles per category",
+        min_value=10,
+        max_value=100,
+        value=50,
+        step=10,
+    )
 
     selected_categories = st.multiselect(
-        "Active Intelligence Streams",
-        options=list(CATEGORIES.keys()),
-        default=list(CATEGORIES.keys())
+        "Categories",
+        list(CATEGORIES.keys()),
+        default=list(CATEGORIES.keys()),
     )
 
-    high_priority_only = st.checkbox("⚡ High-Priority Alerts Only (Score ≥ 65)", value=False)
+    min_relevance = st.slider(
+        "Minimum audit relevance",
+        min_value=5,
+        max_value=50,
+        value=5,
+        step=5,
+    )
 
-    if st.button("RUN REGULATORY SCAN", use_container_width=True):
-        st.cache_data.clear()
-        st.rerun()
+    refresh = st.button("🔄 Fetch latest news", type="primary", use_container_width=True)
 
-    st.markdown("<hr style='margin: 20px 0;' />", unsafe_allow_html=True)
-    st.markdown("""
-    <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: #64748B; line-height: 1.4;">
-        <b>ZERO-TRUST COMPLIANCE NOTICE:</b><br/>
-        Surveillance streams utilize weighted domain vocabulary (Basel, RBI, ECB, SOX, AML, Model Risk).
-    </div>
-    """, unsafe_allow_html=True)
+if not api_key:
+    st.warning(
+        "Add your NewsAPI key in the sidebar, or configure API_KEY in "
+        "Streamlit secrets."
+    )
+    st.stop()
 
-# -----------------------------------------------------------------------------
-# 6. APPLICATION MAIN VIEW & METRICS HUD
-# -----------------------------------------------------------------------------
-# Fetch Articles
-articles, errors = fetch_news_api(
-    api_key=api_key_input,
-    categories_to_fetch=selected_categories if selected_categories else list(CATEGORIES.keys()),
-    lookback_days=lookback_days,
-    page_size=page_size
-)
+if refresh or "news_loaded" not in st.session_state:
+    with st.spinner("Fetching targeted global audit news..."):
+        articles, errors = load_news(api_key, lookback_days, page_size)
 
-# Filter by relevance threshold and high priority
-filtered = [a for a in articles if a["auditRelevance"] >= min_relevance]
-if high_priority_only:
-    filtered = [a for a in filtered if a["auditRelevance"] >= 65]
+    st.session_state.news = articles
+    st.session_state.news_errors = errors
+    st.session_state.news_loaded = True
 
-# Top Futuristic HUD Header
-st.markdown(f"""
-<div class="hud-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <div class="hud-title">
-            <span>AUDIT INTELLIGENCE</span>
-            <span class="hud-badge">BANK // OS v2.8</span>
-        </div>
-        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: #94A3B8;">
-            <span class="live-pulse"></span>INSTITUTIONAL RISK RADAR // LIVE
-        </div>
-    </div>
-    <div style="font-size: 13px; color: #94A3B8; max-width: 800px;">
-        Real-time global banking surveillance for Internal Audit, Risk Committees, Control Officers, and Supervisory Compliance.
-    </div>
-</div>
-""", unsafe_allow_html=True)
+articles = st.session_state.get("news", [])
+errors = st.session_state.get("news_errors", [])
 
-# Diagnostic alert if API returned messages or rate limits
-if errors:
-    with st.expander("⚠️ NEWSAPI TELEMETRY NOTICES & STATUS", expanded=False):
-        for err in errors:
-            st.markdown(f"<div style='font-family: monospace; font-size: 11px; color: #F59E0B;'>• {err}</div>", unsafe_allow_html=True)
-        st.markdown("<div style='font-size: 11px; color: #94A3B8; margin-top: 6px;'>Note: NewsAPI Developer tier restricts queries to within the last 30 days and max 100 requests/day. Verified institutional intelligence maintains 100% operational uptime.</div>", unsafe_allow_html=True)
-
-
-# KPI Metrics Row
-c1, c2, c3, c4 = st.columns(4)
-total_streams = len(filtered)
-critical_alerts = sum(1 for a in filtered if a["auditRelevance"] >= 75)
-elevated_alerts = sum(1 for a in filtered if 50 <= a["auditRelevance"] < 75)
-avg_score = int(sum(a["auditRelevance"] for a in filtered) / total_streams) if total_streams > 0 else 0
-
-with c1:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">TOTAL INTELLIGENCE STREAMS</div>
-        <div class="metric-value">{total_streams}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c2:
-    st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(244, 63, 94, 0.4);">
-        <div class="metric-label" style="color: #F43F5E;">CRITICAL RISK SIGNALS (≥75)</div>
-        <div class="metric-value" style="color: #F43F5E;">{critical_alerts}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c3:
-    st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.4);">
-        <div class="metric-label" style="color: #F59E0B;">ELEVATED WATCH (50-74)</div>
-        <div class="metric-value" style="color: #F59E0B;">{elevated_alerts}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c4:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">MEAN AUDIT RELEVANCE</div>
-        <div class="metric-value" style="color: #00E5FF;">{avg_score} <span style="font-size: 12px; color: #64748B;">/100</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-
-# Search Bar
-search_query = st.text_input(
-    "SEARCH",
-    placeholder="QUERY // Filter by institution, regulator (RBI, Basel), keyword (sanctions, model risk)...",
-    label_visibility="collapsed"
-)
-
-if search_query:
-    sq = search_query.lower()
+if selected_categories:
     filtered = [
-        a for a in filtered
-        if sq in a["title"].lower() or sq in a["description"].lower() or any(sq in t.lower() for t in a["matchedTerms"])
+        a for a in articles
+        if a["category"] in selected_categories
+        and a["audit_relevance"] >= min_relevance
     ]
+else:
+    filtered = []
 
-# Category Tabs
-tab_names = ["All"] + list(CATEGORIES.keys())
-tabs = st.tabs([f"// {name.upper()}" for name in tab_names])
+# ---------------------------------------------------------
+# METRICS
+# ---------------------------------------------------------
 
-for tab, cat_name in zip(tabs, tab_names):
-    with tab:
-        cat_articles = filtered if cat_name == "All" else [a for a in filtered if a["category"] == cat_name]
-        
-        if not cat_articles:
-            st.markdown("""
-            <div style="text-align: center; padding: 40px; background: #0D1424; border-radius: 8px; border: 1px dashed rgba(56, 189, 248, 0.3);">
-                <div style="font-family: 'JetBrains Mono'; font-size: 13px; color: #94A3B8;">NO AUDIT SIGNALS MATCHING CURRENT CRITERIA</div>
-                <div style="font-size: 11px; color: #64748B; margin-top: 5px;">Adjust search query or lower relevance threshold in the sidebar.</div>
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            for art in cat_articles:
-                cat = art["category"]
-                cat_color = CATEGORY_COLORS.get(cat, "#38BDF8")
-                score = art["auditRelevance"]
-                
-                if score >= 75:
-                    score_class = "score-critical"
-                    score_label = "CRITICAL"
-                elif score >= 50:
-                    score_class = "score-elevated"
-                    score_label = "ELEVATED"
-                else:
-                    score_class = "score-monitor"
-                    score_label = "MONITOR"
+m1, m2, m3, m4, m5 = st.columns(5)
+m1.metric("Audit stories", len(filtered))
+m2.metric("Transformation", sum(a["category"] == "Transformation" for a in filtered))
+m3.metric("Regulation", sum(a["category"] == "Regulation" for a in filtered))
+m4.metric("Cyber & Tech", sum(a["category"] == "Cyber and Tech" for a in filtered))
+m5.metric("Global Banks", sum(a["category"] == "Global Banks" for a in filtered))
 
-                tags_html = "".join([f"<span class='tag-chip'>#{t.replace(' ', '_').upper()}</span>" for t in art["matchedTerms"][:5]])
-                
-                formatted_date = art["publishedAt"].replace("T", " ").replace("Z", "")[:16]
+st.divider()
 
-                st.markdown(f"""
-                <div class="article-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <span class="cat-chip" style="background: {cat_color}22; border: 1px solid {cat_color}66; color: {cat_color};">
-                                // {cat.upper()}
-                            </span>
-                            <span class="score-chip {score_class}">
-                                {score_label} {score}/100
-                            </span>
-                        </div>
-                        <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #64748B;">
-                            {art['source'].upper()} &nbsp;//&nbsp; {formatted_date}
-                        </div>
-                    </div>
-                    <div style="font-size: 16px; font-weight: 700; color: #FFFFFF; line-height: 1.4; margin-bottom: 8px;">
-                        {art['title']}
-                    </div>
-                    <div style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 12px;">
-                        {art['description']}
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                        <div>{tags_html}</div>
-                        <div>
-                            <a href="{art['url']}" target="_blank" style="text-decoration: none;">
-                                <span style="font-family: 'JetBrains Mono'; font-size: 11px; background: #00E5FF; color: #06090F; padding: 4px 12px; border-radius: 4px; font-weight: 700;">
-                                    ORIGINAL SOURCE ↗
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+if errors:
+    with st.expander("⚠️ Source/API warnings"):
+        for error in errors:
+            st.write(error)
 
-# -----------------------------------------------------------------------------
-# 7. EXPORT DATA SECTION
-# -----------------------------------------------------------------------------
-st.markdown("<hr style='margin-top: 40px; border-color: rgba(56, 189, 248, 0.2);' />", unsafe_allow_html=True)
-col_down1, col_down2 = st.columns([8, 2])
-with col_down1:
-    st.markdown("""
-    <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: #64748B;">
-        AEGIS BANKING AUDIT INTELLIGENCE PLATFORM • EXPORT TELEMETRY FOR AUDIT COMMITTEES
-    </div>
-    """, unsafe_allow_html=True)
-with col_down2:
-    if filtered:
-        df_export = pd.DataFrame(filtered)
-        csv = df_export.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="EXPORT AUDIT CSV",
-            data=csv,
-            file_name=f"banking_audit_intel_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.csv",
-            mime="text/csv",
-            use_container_width=True
-        )
+if not filtered:
+    st.info(
+        "No matching audit stories were found. Try increasing the lookback "
+        "period or lowering the relevance threshold."
+    )
+else:
+    df = pd.DataFrame(filtered)
+
+    # Category tabs make the dashboard easier to use.
+    tabs = st.tabs(["All", *selected_categories])
+
+    def render_articles(rows):
+        for article in rows:
+            category = article["category"]
+            relevance = article["audit_relevance"]
+            title = article["title"]
+            source = article["source"]
+            published = article["publishedAt"]
+
+            st.markdown(f"### {title}")
+            st.caption(
+                f"**{category}**  •  {source}  •  "
+                f"Audit relevance: {relevance}/100  •  {published}"
+            )
+
+            if article["description"]:
+                st.write(article["description"])
+
+            if article["url"]:
+                st.link_button("Read original article", article["url"])
+
+            st.divider()
+
+    with tabs[0]:
+        render_articles(filtered)
+
+    for tab, category in zip(tabs[1:], selected_categories):
+        with tab:
+            render_articles(
+                [a for a in filtered if a["category"] == category]
+            )
+
+st.caption(
+    "Data source: NewsAPI. This application searches NewsAPI's indexed sources; "
+    "it does not literally crawl every website on the internet."
+)
