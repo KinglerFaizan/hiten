@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Audit Intelligence</string>
+    <string name="app_subtitle">Global Banking Audit Intelligence</string>
+    <string name="app_caption">Targeted global banking news focused on Audit, Risk, Controls, Regulation, Cyber/Technology and Banking Leadership.</string>
+    
+    <string name="tab_all">All</string>
+    <string name="tab_transformation">Transformation</string>
+    <string name="tab_regulation">Regulation</string>
+    <string name="tab_people">People</string>
+    <string name="tab_cyber">Cyber &amp; Tech</string>
+    <string name="tab_banks">Global Banks</string>
+
+    <string name="metric_total">Audit stories</string>
+    <string name="metric_transformation">Transformation</string>
+    <string name="metric_regulation">Regulation</string>
+    <string name="metric_cyber">Cyber &amp; Tech</string>
+    <string name="metric_banks">Global Banks</string>
+
+    <string name="search_settings">Search settings</string>
+    <string name="newsapi_key_label">NewsAPI key</string>
+    <string name="newsapi_key_hint">Enter custom NewsAPI key</string>
+    <string name="lookback_days">Look back (days)</string>
+    <string name="articles_per_category">Articles per category</string>
+    <string name="categories_label">Categories</string>
+    <string name="min_audit_relevance">Minimum audit relevance</string>
+    <string name="fetch_latest_news">Fetch latest news</string>
+    <string name="fetching_news">Fetching targeted global audit news…</string>
+
+    <string name="read_original">Read original article</string>
+    <string name="no_articles_found">No matching audit stories were found. Try increasing the lookback period or lowering the relevance threshold.</string>
+    <string name="source_api_warnings">Source/API warnings</string>
+    <string name="data_source_disclaimer">Data source: NewsAPI. This application searches NewsAPI indexed sources with intelligent audit classification.</string>
+    <string name="offline_sample_notice">Operating in curated offline mode with verified banking audit intelligence stories.</string>
+</resources>
