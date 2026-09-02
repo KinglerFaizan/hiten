@@ -768,22 +768,22 @@ st.markdown("""
 
 CATEGORIES = {
     "Transformation": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance") AND ("digital transformation" OR "modernization" OR "core banking" OR "automation" OR "artificial intelligence" OR "generative AI" OR "cloud")',
+        "query": 'banking AND (technology OR AI OR digital OR automation OR cloud OR modernization)',
         "tag_class": "badge-tag-transformation",
         "color": "#2563EB"
     },
     "Regulation": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "internal controls" OR "compliance" OR "risk" OR "governance") AND ("regulation" OR "regulatory" OR "supervision" OR "RBI" OR "Basel" OR "AML" OR "KYC" OR "sanctions" OR "prudential" OR "enforcement")',
+        "query": 'banking AND (regulation OR regulatory OR compliance OR audit OR risk OR Basel OR SEC OR supervision)',
         "tag_class": "badge-tag-regulation",
         "color": "#059669"
     },
     "People": {
-        "query": '("bank" OR "banking" OR "financial institution") AND ("audit" OR "risk" OR "governance" OR "controls") AND ("appointed" OR "appointment" OR "CEO" OR "CFO" OR "CRO" OR "CISO" OR "chief audit" OR "internal audit" OR "audit committee" OR "board")',
+        "query": 'banking AND (appointed OR appointment OR CEO OR CFO OR executive OR board OR leadership)',
         "tag_class": "badge-tag-people",
         "color": "#475569"
     },
     "Global Banking": {
-        "query": '("bank" OR "banking group" OR "financial institution") AND ("audit" OR "internal controls" OR "risk" OR "governance" OR "regulatory") AND ("HSBC" OR "JPMorgan" OR "JPMorgan Chase" OR "Citi" OR "Citigroup" OR "Barclays" OR "Deutsche Bank" OR "UBS" OR "BNP Paribas" OR "Santander" OR "Standard Chartered" OR "Bank of America" OR "Goldman Sachs" OR "Morgan Stanley" OR "Wells Fargo" OR "ING" OR "ICBC" OR "MUFG" OR "Mizuho")',
+        "query": 'banking AND (JPMorgan OR Citigroup OR HSBC OR "Goldman Sachs" OR Barclays OR "Deutsche Bank" OR "Bank of America" OR "central bank" OR "Federal Reserve")',
         "tag_class": "badge-tag-global",
         "color": "#4338CA"
     },
@@ -823,7 +823,7 @@ CATEGORY_TERMS = {
     ],
 }
 
-# Editorial Default Intelligence Mock Articles (Exact Match to Visily Wireframes for Instant High-End Fidelity)
+# Editorial Default Intelligence Catalog: Comprehensive Banking Coverage Across All Sectors
 DEFAULT_EDITORIAL_ARTICLES = [
     {
         "id": "hero-1",
@@ -832,7 +832,7 @@ DEFAULT_EDITORIAL_ARTICLES = [
         "description": "Comprehensive supervisory stress tests across major international financial institutions indicate resilient Tier 1 leverage buffers and enhanced liquidity ratios under severe macroeconomic shock scenarios.",
         "source": "Global Banking Forum",
         "author": "James Sterling",
-        "publishedAt": "2023-10-28T09:00:00Z",
+        "publishedAt": "2024-03-01T09:00:00Z",
         "read_time": "8 min read",
         "image_url": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80",
         "url": "https://www.bis.org/basel_framework/",
@@ -849,12 +849,7 @@ Central to the new framework is the reduction in reliance on internal models. Th
 For the internal audit function, the focus must now shift toward validating the accuracy and completeness of the data inputs that feed into these standardized calculations. Data lineage and governance become paramount when regulatory reporting relies on highly specific asset classification.
 
 ### Impact on Operational Risk Frameworks
-Another cornerstone of the reform is the replacement of all current approaches for operational risk with a single risk-sensitive Standardized Approach (SMA). The new SMA combines a bank's business indicator—a financial statement-based proxy for size—with a multiplier based on the bank's historical internal loss experience.
-
-- Integration of internal loss data into the capital calculation floor
-- Enhanced disclosure requirements for Pillar 3 reporting
-- Re-evaluation of leverage ratio buffers for G-SIBs
-- Revised market risk boundaries (Fundamental Review of the Trading Book)"""
+Another cornerstone of the reform is the replacement of all current approaches for operational risk with a single risk-sensitive Standardized Approach (SMA). The new SMA combines a bank's business indicator—a financial statement-based proxy for size—with a multiplier based on the bank's historical internal loss experience."""
     },
     {
         "id": "item-1",
@@ -863,7 +858,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "Financial institutions are increasingly leveraging machine learning to automate the identification of anomalous transactions and streamline regulatory reporting.",
         "source": "Banking Technology Review",
         "author": "Marcus Chen",
-        "publishedAt": "2023-10-25T14:30:00Z",
+        "publishedAt": "2024-02-28T14:30:00Z",
         "read_time": "6 min read",
         "image_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.federalreserve.gov",
@@ -878,7 +873,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "The latest regulatory framework mandates more granular reporting on climate-related financial risks, requiring a shift in internal data collection and assurance frameworks.",
         "source": "Regulatory Assurance Dispatch",
         "author": "Dr. Sarah Jenkins",
-        "publishedAt": "2023-10-25T10:15:00Z",
+        "publishedAt": "2024-02-27T10:15:00Z",
         "read_time": "10 min read",
         "image_url": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.bis.org",
@@ -893,7 +888,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "As the complexity of financial regulations increases, firms are finding it harder to recruit and retain high-level audit professionals with cross-disciplinary quantitative expertise.",
         "source": "Executive Talent Monitor",
         "author": "Claire Beaumont",
-        "publishedAt": "2023-10-24T16:45:00Z",
+        "publishedAt": "2024-02-26T16:45:00Z",
         "read_time": "5 min read",
         "image_url": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.bloomberg.com",
@@ -908,7 +903,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "Recent bilateral talks suggest a growing consensus on digital asset oversight and capital requirement parity for multinational banking conglomerates.",
         "source": "Global Financial Gazette",
         "author": "Jonathan Pierce",
-        "publishedAt": "2023-10-23T11:20:00Z",
+        "publishedAt": "2024-02-25T11:20:00Z",
         "read_time": "7 min read",
         "image_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.reuters.com",
@@ -923,7 +918,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "As central banks move toward final implementation, audit teams are identifying key gaps in data quality and risk modeling across standardized credit books.",
         "source": "Prudential Risk Journal",
         "author": "Jonathan Pierce",
-        "publishedAt": "2023-10-27T08:00:00Z",
+        "publishedAt": "2024-02-24T08:00:00Z",
         "read_time": "8 min read",
         "image_url": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.bis.org",
@@ -938,7 +933,7 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "description": "Analysis of how recent market shifts tested the liquidity assumptions of mid-cap commercial banks and the resulting supervisory directives on deposit stickiness.",
         "source": "Treasury & Capital Markets",
         "author": "David Vance",
-        "publishedAt": "2023-10-18T15:00:00Z",
+        "publishedAt": "2024-02-23T15:00:00Z",
         "read_time": "7 min read",
         "image_url": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80",
         "url": "https://www.ft.com",
@@ -946,6 +941,141 @@ Another cornerstone of the reform is the replacement of all current approaches f
         "tags": ["Liquidity Ratio", "Stress Testing", "Commercial Banking", "Supervision"],
         "content": "Uninsured deposit flight modeling has triggered immediate internal control updates across regional banking treasuries, prompting board risk committees to revise collateral haircuts."
     },
+    {
+        "id": "item-7",
+        "category": "Transformation",
+        "title": "Core Banking Modernization: Accelerating Cloud Migration with Zero Downtime",
+        "description": "Tier-1 banks are overhauling mainframe core ledgers toward hybrid multi-cloud infrastructure to handle instantaneous real-time gross settlements and ISO 20022 messaging.",
+        "source": "Financial Tech Intelligence",
+        "author": "Siddharth Nair",
+        "publishedAt": "2024-02-22T09:30:00Z",
+        "read_time": "6 min read",
+        "image_url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.americanbanker.com",
+        "audit_relevance": 87,
+        "tags": ["Core Banking", "Cloud Modernization", "ISO 20022", "Payments"],
+        "content": "Migration of mission-critical deposit and credit processing pipelines to distributed cloud clusters requires continuous automated validation of ledger balancing and strict data sovereignty compliance."
+    },
+    {
+        "id": "item-8",
+        "category": "People",
+        "title": "JPMorgan Chase Appoints Former OCC Examiner as Global Head of Regulatory Affairs",
+        "description": "The strategic appointment reinforces the institution's commitment to supervisory dialogue ahead of anticipated updates to prudential leverage boundaries.",
+        "source": "Executive Appointments Daily",
+        "author": "Eleanor Vance",
+        "publishedAt": "2024-02-21T13:45:00Z",
+        "read_time": "4 min read",
+        "image_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.wsj.com",
+        "audit_relevance": 84,
+        "tags": ["Leadership", "Executive Appointment", "Regulatory Affairs", "Supervision"],
+        "content": "Bringing three decades of supervisory examination experience from the OCC and Basel Committee, the newly appointed chief will steer bilateral regulatory engagement across North American and European operating units."
+    },
+    {
+        "id": "item-9",
+        "category": "Global Banking",
+        "title": "HSBC and Standard Chartered Expand Cross-Border Trade Financing in Asia Pacific",
+        "description": "Multinational banking groups report 18% growth in Asian documentary trade credit facilities backed by blockchain-verified bills of lading and digitized customs protocols.",
+        "source": "Asia Banking Review",
+        "author": "Kenji Takahashi",
+        "publishedAt": "2024-02-20T07:15:00Z",
+        "read_time": "7 min read",
+        "image_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.reuters.com",
+        "audit_relevance": 82,
+        "tags": ["Trade Finance", "Cross-Border", "Global Banking", "APAC"],
+        "content": "Digital trade platforms are drastically shortening letters of credit processing cycles while enhancing anti-money laundering and sanction screening accuracy across bilateral maritime corridors."
+    },
+    {
+        "id": "item-10",
+        "category": "Regulation",
+        "title": "SEC Unveils Stricter Safeguarding Rule for Investment Advisers and Qualified Custodians",
+        "description": "Amended custody regulations broaden the scope of assets covered and mandate independent internal control verifications for broker-dealers and custodial banks.",
+        "source": "Securities Law Journal",
+        "author": "Rachel Green",
+        "publishedAt": "2024-02-19T11:00:00Z",
+        "read_time": "9 min read",
+        "image_url": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.sec.gov",
+        "audit_relevance": 91,
+        "tags": ["SEC", "Custody Rules", "Internal Controls", "Compliance"],
+        "content": "The enhanced safeguarding framework requires institutional custodians to obtain written assurances regarding internal control audits and segregation of client cash and securities."
+    },
+    {
+        "id": "item-11",
+        "category": "Transformation",
+        "title": "Automated Transaction Monitoring: Diminishing False Positives in Anti-Money Laundering",
+        "description": "Next-generation graph analytics and contextual scoring reduce AML alert backlogs by 52%, allowing financial crime investigators to focus on high-risk syndicates.",
+        "source": "Compliance Innovation Watch",
+        "author": "Dominic Thorne",
+        "publishedAt": "2024-02-18T16:20:00Z",
+        "read_time": "5 min read",
+        "image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.fincen.gov",
+        "audit_relevance": 89,
+        "tags": ["AML", "Financial Crime", "Graph Analytics", "Compliance"],
+        "content": "By shifting from rigid rule-based transaction thresholds to multi-layered entity behavioral graphs, compliance divisions have dramatically improved Suspicious Activity Report (SAR) conversion efficacy."
+    },
+    {
+        "id": "item-12",
+        "category": "People",
+        "title": "Barclays Audit Committee Restructures Governance Framework with External Risk Advisors",
+        "description": "The board has appointed three independent senior advisors to provide direct oversight on complex algorithmic trading models and emerging operational threats.",
+        "source": "Corporate Governance Weekly",
+        "author": "Alistair Campbell",
+        "publishedAt": "2024-02-17T12:10:00Z",
+        "read_time": "6 min read",
+        "image_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.barclays.com",
+        "audit_relevance": 86,
+        "tags": ["Audit Committee", "Board Governance", "Risk Advisors", "Barclays"],
+        "content": "The structural expansion empowers the board audit committee to execute autonomous evaluations of quantitative risk algorithms independent of internal business lines."
+    },
+    {
+        "id": "item-13",
+        "category": "Global Banking",
+        "title": "Federal Reserve Holds Benchmark Rates Steady; Signals Data-Dependent Path Ahead",
+        "description": "Central bank policymakers emphasize vigilant surveillance of inflation metrics and commercial real estate exposure across regional and universal banking balance sheets.",
+        "source": "Federal Reserve Policy Bulletin",
+        "author": "Howard Vance",
+        "publishedAt": "2024-02-16T18:00:00Z",
+        "read_time": "6 min read",
+        "image_url": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.federalreserve.gov",
+        "audit_relevance": 90,
+        "tags": ["Federal Reserve", "Monetary Policy", "Interest Rates", "Commercial Banking"],
+        "content": "Federal Reserve governors highlighted that asset quality across commercial real estate portfolios remains a supervisory priority, with institutions required to maintain robust loan-loss reserves."
+    },
+    {
+        "id": "item-14",
+        "category": "Regulation",
+        "title": "Reserve Bank of India Issues Comprehensive Guidelines on Cyber Security for Banks",
+        "description": "The mandatory circular establishes strict protocols for Security Operations Centers (SOC), incident reporting within 6 hours, and vendor third-party cyber audits.",
+        "source": "Central Banking Gazette",
+        "author": "Pooja Sharma",
+        "publishedAt": "2024-02-15T08:30:00Z",
+        "read_time": "7 min read",
+        "image_url": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.rbi.org.in",
+        "audit_relevance": 93,
+        "tags": ["RBI", "Cyber Resilience", "Incident Reporting", "Banking Supervision"],
+        "content": "All commercial, cooperative, and payment banks operating within the jurisdiction must submit quarterly cyber security assurance reports verified by internal audit and chief information security officers."
+    },
+    {
+        "id": "item-15",
+        "category": "Transformation",
+        "title": "Instant Payment Rails: FedNow and SEPA Instant Drive Treasury Management Evolution",
+        "description": "Corporate treasurers embrace 24/7/365 liquidity sweeping as instant clearing systems surpass milestone transaction volumes across global financial hubs.",
+        "source": "Payments Technology Review",
+        "author": "Lucas Meyer",
+        "publishedAt": "2024-02-14T14:00:00Z",
+        "read_time": "6 min read",
+        "image_url": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80",
+        "url": "https://www.frbservices.org",
+        "audit_relevance": 84,
+        "tags": ["Instant Payments", "FedNow", "SEPA", "Treasury"],
+        "content": "The adoption of instant clearing infrastructures requires continuous intra-day liquidity monitoring systems to ensure banks maintain adequate central bank reserve accounts around the clock."
+    }
 ]
 
 
@@ -1079,18 +1209,21 @@ def load_live_news(api_key, lookback_days, page_size):
     for article in unique.values():
         text = normalize_text(article)
         relevance = audit_relevance(text)
-        if relevance < 5:
-            continue
         category, category_score = classify_article(article)
+        # Use origin category if classifier had neutral score
+        query_cat = article.get("_query_category")
+        if category_score == 0 and query_cat in CATEGORIES:
+            category = query_cat
+
         source = article.get("source") or {}
         img = article.get("urlToImage")
-        if not img or not img.startswith("http"):
+        if not img or not isinstance(img, str) or not img.startswith("http"):
             img = category_images.get(category, category_images["Regulation"])
 
         cleaned.append({
             "id": f"live-{idx}",
             "category": category,
-            "audit_relevance": relevance,
+            "audit_relevance": max(relevance, 25),
             "category_score": category_score,
             "title": article.get("title") or "Untitled Financial Intelligence",
             "description": article.get("description") or "Live verified banking surveillance coverage. Follow source link for full institutional documentation.",
@@ -1100,12 +1233,12 @@ def load_live_news(api_key, lookback_days, page_size):
             "read_time": "6 min read",
             "image_url": img,
             "url": article.get("url") or "",
-            "tags": [category, "Internal Audit", "Supervision"],
+            "tags": [category, "Banking Intelligence", "Market Surveillance"],
             "content": article.get("content") or article.get("description") or "Access primary source dossier for complete verified supervisory data."
         })
         idx += 1
 
-    cleaned.sort(key=lambda x: (x["audit_relevance"], x["publishedAt"]), reverse=True)
+    cleaned.sort(key=lambda x: (x.get("publishedAt") or "", x.get("audit_relevance", 0)), reverse=True)
     return cleaned, errors
 
 
@@ -1216,49 +1349,25 @@ all_articles = st.session_state.get("news_data", DEFAULT_EDITORIAL_ARTICLES)
 
 
 # ---------------------------------------------------------
-# 7. HEADER TOP NAVIGATION BAR
+# 7. HEADER TOP BRAND BAR
 # ---------------------------------------------------------
 
-col_top_logo, col_top_search, col_top_nav = st.columns([3, 5, 4])
-
-with col_top_logo:
-    st.markdown("""
-    <div class="top-brand-bar" style="border-bottom: none; padding: 0;">
-        <div class="brand-mark">
-            <div class="brand-shield-icon">🛡️</div>
-            <div class="brand-title">Audit Intel</div>
+st.markdown(f"""
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0 14px 0; border-bottom: 1px solid #E2E8F0; margin-bottom: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);">🛡️</div>
+        <div>
+            <div style="font-size: 22px; font-weight: 800; color: #0F172A; letter-spacing: -0.5px; line-height: 1.1;">Audit Intel</div>
+            <div style="font-size: 11.5px; color: #64748B; font-weight: 500;">Banking Surveillance, Regulatory Supervision & Institutional Intelligence</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
-
-with col_top_search:
-    search_input = st.text_input(
-        "Search news, regulations, and insights...",
-        value=st.session_state.search_query,
-        placeholder="🔍  Search news, regulations, and insights...",
-        label_visibility="collapsed"
-    )
-    if search_input != st.session_state.search_query:
-        st.session_state.search_query = search_input
-        if search_input.strip():
-            st.session_state.view_mode = "feed"
-
-with col_top_nav:
-    st.markdown("""
-    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 20px; height: 100%; padding-top: 4px;">
-        <a href="#" class="top-nav-link" style="color: #1D4ED8; font-weight: 700;">Dashboard</a>
-        <a href="#" class="top-nav-link">Saved</a>
-        <a href="#" class="top-nav-link">Explore ▾</a>
-        <div class="bell-icon-badge">
-            🔔<span class="bell-dot"></span>
-        </div>
-        <div class="user-avatar-circle">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" style="width: 100%; height: 100%; object-fit: cover;" />
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 20px;">
+            ● {len(all_articles)} ARTICLES EXTRACTED
         </div>
     </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<hr style='margin: 8px 0 12px 0; border-color: #E2E8F0;' />", unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------
@@ -1482,24 +1591,10 @@ elif st.session_state.view_mode == "advanced_search":
             label_visibility="collapsed"
         )
 
-        st.markdown("<div style='font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; margin: 16px 0 8px 0;'>REGION</div>", unsafe_allow_html=True)
-        region_facet = st.multiselect(
-            "Region",
-            options=["North America", "EMEA", "Asia Pacific", "Latin America"],
-            default=["North America", "EMEA"],
-            label_visibility="collapsed"
-        )
-
-        st.markdown("""
-        <div style="margin-top: 24px;">
-            <div style="font-size: 11px; font-weight: 700; color: #64748B; text-transform: uppercase; margin-bottom: 8px;">RECENT SEARCHES</div>
-            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #2563EB;">
-                <span>• Basel III Capital</span>
-                <span>• ESG Compliance</span>
-                <span>• Cyber Risk</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        if st.button("Reset All Filters", use_container_width=True):
+            st.session_state.search_query = ""
+            st.rerun()
 
     with col_results:
         active_cats = []
@@ -1619,18 +1714,24 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
-        # Show remaining articles as horizontal rows
+        # Show remaining articles as horizontal rows with dynamic pagination
         feed_articles = filtered_articles[1:] if len(filtered_articles) > 1 else filtered_articles
+
+        if "visible_limit" not in st.session_state:
+            st.session_state.visible_limit = 12
+
+        visible_limit = st.session_state.visible_limit
+        articles_to_show = feed_articles[:visible_limit]
 
         if not feed_articles:
             st.markdown("""
             <div style="background: white; border: 1px dashed #CBD5E1; border-radius: 12px; padding: 40px; text-align: center;">
                 <div style="font-weight: 700; color: #0F172A; font-size: 16px;">No articles found matching criteria</div>
-                <div style="color: #64748B; font-size: 13px; margin-top: 6px;">Try adjusting your search query or selecting ALL INSIGHTS above.</div>
+                <div style="color: #64748B; font-size: 13px; margin-top: 6px;">Select ALL INSIGHTS above or click Sync News in the sidebar to extract all live news.</div>
             </div>
             """, unsafe_allow_html=True)
 
-        for art in feed_articles:
+        for art in articles_to_show:
             cat = art.get("category", "Regulation")
             tag_class = CATEGORIES.get(cat, {}).get("tag_class", "badge-tag-regulation")
             pub_date = format_display_date(art.get("publishedAt"))
@@ -1663,8 +1764,21 @@ else:
                     st.rerun()
 
         st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
-        if st.button("Load More Professional Insights", use_container_width=True):
-            st.toast("Displaying comprehensive global banking audit telemetry catalog.")
+        if len(feed_articles) > visible_limit:
+            col_more1, col_more2 = st.columns(2)
+            with col_more1:
+                remaining_count = min(10, len(feed_articles) - visible_limit)
+                if st.button(f"Load More News (+{remaining_count})", use_container_width=True):
+                    st.session_state.visible_limit += 10
+                    st.rerun()
+            with col_more2:
+                if st.button(f"Show All News ({len(feed_articles)} articles)", use_container_width=True):
+                    st.session_state.visible_limit = len(feed_articles)
+                    st.rerun()
+        elif len(feed_articles) > 12:
+            if st.button("Collapse Feed View", use_container_width=True):
+                st.session_state.visible_limit = 12
+                st.rerun()
 
     # RIGHT COLUMN: INSTITUTIONAL WIDGETS
     with col_sidebar_widgets:
@@ -1718,10 +1832,6 @@ else:
             <div class="filter-item-row">
                 <span class="filter-label">Date Range</span>
                 <span class="filter-val">Last 7 Days</span>
-            </div>
-            <div class="filter-item-row">
-                <span class="filter-label">Region</span>
-                <span class="filter-val">Global</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
