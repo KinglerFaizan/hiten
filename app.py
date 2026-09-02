@@ -14,188 +14,286 @@ except ImportError:
 
 
 # ---------------------------------------------------------
-# 1. APP CONFIGURATION & FUTURISTIC OBSIDIAN THEME
+# 1. APP CONFIGURATION & SLEEK EXECUTIVE FUTURISTIC THEME
 # ---------------------------------------------------------
 
 st.set_page_config(
-    page_title="AUDIT INTELLIGENCE // BANK TERMINAL",
+    page_title="Audit Intelligence | Executive Banking Intelligence",
     page_icon="🏦",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Cyber-Obsidian Banking Terminal CSS
+# Refined, High-End Executive Theme: Clean, minimal palette, natural typography, spacious reading font
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-    /* Global Theme Overrides */
+    /* Global Body Font and Background */
     .stApp {
-        background-color: #06090F;
-        color: #F1F5F9;
-        font-family: 'Inter', sans-serif;
+        background-color: #0B0F19;
+        color: #E2E8F0;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Sidebar Styling */
+    /* Sidebar Refinement */
     [data-testid="stSidebar"] {
-        background-color: #0B101E;
-        border-right: 1px solid rgba(0, 229, 255, 0.15);
+        background-color: #0F1626;
+        border-right: 1px solid rgba(255, 255, 255, 0.07);
     }
     [data-testid="stSidebar"] hr {
-        border-color: rgba(0, 229, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.08);
     }
 
-    /* Monospace Terminal Headers */
-    h1, h2, h3, .terminal-mono {
-        font-family: 'JetBrains Mono', monospace !important;
-        letter-spacing: -0.5px;
-    }
-
-    /* Futuristic HUD Header */
-    .hud-container {
-        background: linear-gradient(135deg, #0B132B 0%, #0D1B3E 50%, #06090F 100%);
-        border: 1px solid rgba(0, 229, 255, 0.3);
-        border-radius: 12px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 0 25px rgba(0, 229, 255, 0.08);
-        position: relative;
-        overflow: hidden;
-    }
-    .hud-container::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #00E5FF, #38BDF8, #8B5CF6);
-    }
-    .hud-title {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 24px;
-        font-weight: 800;
-        color: #FFFFFF;
-        letter-spacing: 2px;
+    /* Top Brand Nav */
+    .brand-header {
         display: flex;
         align-items: center;
         gap: 12px;
+        padding: 4px 0 16px 0;
+        margin-bottom: 8px;
     }
-    .hud-badge {
-        background: rgba(0, 229, 255, 0.15);
-        border: 1px solid rgba(0, 229, 255, 0.5);
-        color: #00E5FF;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 11px;
-        padding: 2px 8px;
-        border-radius: 4px;
+    .brand-logo-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #1E293B, #0F172A);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+    .brand-title {
+        font-size: 15px;
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: -0.2px;
+        color: #F8FAFC;
     }
-    .live-pulse {
-        display: inline-block;
+    .brand-subtitle {
+        font-size: 11px;
+        font-weight: 500;
+        color: #38BDF8;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    /* Futuristic Executive Header */
+    .executive-header {
+        background: radial-gradient(ellipse at top left, #141E33 0%, #0F172A 50%, #0B0F19 100%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 24px 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+    .executive-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+    }
+    .exec-headline {
+        font-size: 26px;
+        font-weight: 800;
+        color: #FFFFFF;
+        letter-spacing: -0.5px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .exec-badge {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        color: #38BDF8;
+        text-transform: uppercase;
+    }
+    .exec-desc {
+        font-size: 14.5px;
+        color: #94A3B8;
+        line-height: 1.5;
+        max-width: 820px;
+        font-weight: 400;
+    }
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #34D399;
+    }
+    .live-dot {
         width: 8px;
         height: 8px;
         background-color: #10B981;
         border-radius: 50%;
         box-shadow: 0 0 10px #10B981;
-        animation: pulse 1.8s infinite;
-        margin-right: 6px;
-    }
-    @keyframes pulse {
-        0% { opacity: 0.4; }
-        50% { opacity: 1; }
-        100% { opacity: 0.4; }
     }
 
-    /* Metric Cards */
+    /* Professional Metric Cards */
     .metric-card {
-        background: #0D1424;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 8px;
-        padding: 14px 18px;
-        text-align: left;
+        background: #111827;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 16px 20px;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .metric-card:hover {
+        border-color: rgba(56, 189, 248, 0.3);
     }
     .metric-label {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
+        font-size: 11.5px;
+        font-weight: 600;
         color: #94A3B8;
-        letter-spacing: 1px;
-        margin-bottom: 4px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
     }
-    .metric-value {
+    .metric-val {
+        font-size: 26px;
+        font-weight: 700;
+        color: #F8FAFC;
+        letter-spacing: -0.5px;
+    }
+
+    /* Article Card - Natural, High Legibility */
+    .article-container {
+        background: #101626;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 18px;
+        transition: all 0.2s ease-in-out;
+    }
+    .article-container:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+        background: #131A2E;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    .article-meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .category-tag {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: rgba(56, 189, 248, 0.12);
+        color: #38BDF8;
+        border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+    .score-badge {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 22px;
+    }
+    .score-high {
+        background: rgba(244, 63, 94, 0.12);
+        border: 1px solid rgba(244, 63, 94, 0.3);
+        color: #FB7185;
+    }
+    .score-mid {
+        background: rgba(245, 158, 11, 0.12);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: #FBBF24;
+    }
+    .score-std {
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        color: #38BDF8;
+    }
+    .article-date {
+        font-size: 12px;
+        color: #64748B;
+        font-weight: 500;
+    }
+
+    .article-title-text {
+        font-size: 18px;
         font-weight: 700;
         color: #FFFFFF;
+        line-height: 1.45;
+        letter-spacing: -0.2px;
+        margin-bottom: 10px;
     }
 
-    /* Article Cards */
-    .article-card {
-        background-color: #0D1424;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 10px;
-        padding: 18px;
-        margin-bottom: 16px;
-        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .article-card:hover {
-        border-color: rgba(0, 229, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 229, 255, 0.08);
-    }
-    .cat-chip {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 4px;
-        letter-spacing: 0.5px;
-        display: inline-block;
-    }
-    .score-chip {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        padding: 3px 8px;
-        border-radius: 4px;
-        display: inline-block;
-    }
-    .score-critical {
-        background: rgba(244, 63, 94, 0.15);
-        border: 1px solid rgba(244, 63, 94, 0.5);
-        color: #F43F5E;
-    }
-    .score-elevated {
-        background: rgba(245, 158, 11, 0.15);
-        border: 1px solid rgba(245, 158, 11, 0.5);
-        color: #F59E0B;
-    }
-    .score-monitor {
-        background: rgba(0, 229, 255, 0.15);
-        border: 1px solid rgba(0, 229, 255, 0.5);
-        color: #00E5FF;
+    /* Increased Summary Font Size - Natural, Readable & Non-robotic */
+    .article-summary-text {
+        font-size: 15px;
+        font-weight: 400;
+        color: #CBD5E1;
+        line-height: 1.65;
+        margin-bottom: 18px;
     }
 
-    /* Form & Input Elements */
+    /* Minimal Elegant Button */
+    .read-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #38BDF8;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        padding: 7px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .read-btn:hover {
+        background: #38BDF8;
+        color: #0B0F19;
+        border-color: #38BDF8;
+        box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Custom Streamlit Input Overrides */
     .stTextInput>div>div>input {
-        background-color: #0D1424 !important;
-        border: 1px solid rgba(56, 189, 248, 0.3) !important;
-        color: #FFFFFF !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        border-radius: 8px !important;
+        background-color: #101626 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        color: #F8FAFC !important;
+        border-radius: 10px !important;
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+    }
+    .stTextInput>div>div>input:focus {
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 0 1px #38BDF8 !important;
     }
     .stButton>button {
         background: linear-gradient(135deg, #0284C7, #0369A1);
         color: white;
-        border: 1px solid rgba(56, 189, 248, 0.4);
-        border-radius: 8px;
-        font-family: 'JetBrains Mono', monospace;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 10px;
         font-weight: 600;
+        font-size: 13.5px;
+        padding: 8px 18px;
         transition: all 0.2s ease;
     }
     .stButton>button:hover {
-        background: linear-gradient(135deg, #00E5FF, #0284C7);
-        color: #06090F;
-        border-color: #00E5FF;
-        box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        background: linear-gradient(135deg, #38BDF8, #0284C7);
+        color: #0B0F19;
+        border-color: #38BDF8;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -223,15 +321,15 @@ CATEGORIES = {
     },
 }
 
+# Unified, harmonious color theme (Professional, minimal palette)
 CATEGORY_COLORS = {
-    "Transformation": "#00E5FF",
-    "Regulation": "#F59E0B",
-    "People": "#8B5CF6",
-    "Cyber and Tech": "#F43F5E",
-    "Global Banks": "#10B981"
+    "Transformation": "#38BDF8",
+    "Regulation": "#FBBF24",
+    "People": "#A78BFA",
+    "Cyber and Tech": "#FB7185",
+    "Global Banks": "#34D399"
 }
 
-# Extra audit vocabulary is used to remove ordinary banking stories.
 AUDIT_TERMS = [
     "internal audit", "external audit", "audit committee", "auditor",
     "audit finding", "audit findings", "internal control", "internal controls",
@@ -450,16 +548,16 @@ def load_news(api_key, lookback_days, page_size):
 
 
 # ---------------------------------------------------------
-# 4. SIDEBAR: CONTROLS & SECURITY PARAMETERS
+# 4. SIDEBAR: PROFESSIONAL CONTROLS
 # ---------------------------------------------------------
 
 with st.sidebar:
     st.markdown("""
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-        <span style="font-size: 24px;">🛡️</span>
+    <div class="brand-header">
+        <div class="brand-logo-badge">🏛️</div>
         <div>
-            <div style="font-family: 'JetBrains Mono'; font-weight: 800; font-size: 14px; color: #FFFFFF;">AEGIS TERMINAL</div>
-            <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: #00E5FF;">BANK RISK TELEMETRY</div>
+            <div class="brand-title">Audit Intelligence</div>
+            <div class="brand-subtitle">Banking Surveillance</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -468,13 +566,14 @@ with st.sidebar:
 
     if not api_key:
         api_key = st.text_input(
-            "NEWSAPI_KEY CREDENTIAL",
+            "NewsAPI Key",
             type="password",
-            help="Your key is used only for this Streamlit session, or configure API_KEY in secrets.toml.",
+            placeholder="Enter API key...",
+            help="Your key is used only for this session, or configure API_KEY in secrets.toml.",
         )
 
-    st.markdown("<hr style='margin: 15px 0;' />", unsafe_allow_html=True)
-    st.markdown("<div class='terminal-mono' style='font-size: 11px; color: #94A3B8; font-weight: 700; margin-bottom: 8px;'>SCANNER CONTROLS</div>", unsafe_allow_html=True)
+    st.markdown("<hr style='margin: 14px 0;' />", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 11px; color: #94A3B8; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase;'>Filters & Controls</div>", unsafe_allow_html=True)
 
     lookback_days = st.slider(
         "Lookback Window (Days)",
@@ -484,7 +583,7 @@ with st.sidebar:
     )
 
     page_size = st.slider(
-        "Articles Per Category",
+        "Articles Per Stream",
         min_value=10,
         max_value=100,
         value=50,
@@ -492,33 +591,34 @@ with st.sidebar:
     )
 
     selected_categories = st.multiselect(
-        "Active Intelligence Streams",
+        "Intelligence Categories",
         options=list(CATEGORIES.keys()),
         default=list(CATEGORIES.keys()),
     )
 
     min_relevance = st.slider(
-        "Min Audit Relevance Threshold",
+        "Minimum Relevance Threshold",
         min_value=5,
         max_value=50,
         value=5,
         step=5,
     )
 
-    high_priority_only = st.checkbox("⚡ High-Priority Alerts Only (Score ≥ 50)", value=False)
+    high_priority_only = st.checkbox("High-Priority Only (Score ≥ 50)", value=False)
 
-    refresh = st.button("RUN REGULATORY SCAN", type="primary", use_container_width=True)
+    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+    refresh = st.button("Refresh Surveillance", type="primary", use_container_width=True)
 
     st.markdown("<hr style='margin: 20px 0;' />", unsafe_allow_html=True)
     st.markdown("""
-    <div style="font-family: 'JetBrains Mono'; font-size: 9px; color: #64748B; line-height: 1.4;">
-        <b>ZERO-TRUST COMPLIANCE NOTICE:</b><br/>
-        Surveillance streams utilize weighted domain vocabulary (Basel, RBI, ECB, SOX, AML, Model Risk).
+    <div style="font-size: 11.5px; color: #64748B; line-height: 1.5;">
+        <b>Internal Controls Coverage:</b><br/>
+        Real-time intelligence on Basel III/IV, RBI, ECB, SOX, AML/KYC, and Model Governance.
     </div>
     """, unsafe_allow_html=True)
 
 if not api_key:
-    st.warning("⚠️ Enter your NewsAPI key in the sidebar or configure API_KEY in Streamlit secrets.")
+    st.warning("Please enter your NewsAPI key in the sidebar or configure API_KEY in Streamlit secrets.")
     st.stop()
 
 
@@ -527,7 +627,7 @@ if not api_key:
 # ---------------------------------------------------------
 
 if refresh or "news_loaded" not in st.session_state:
-    with st.spinner("Executing real-time multi-threaded banking intelligence scan..."):
+    with st.spinner("Analyzing real-time institutional banking intelligence..."):
         articles, errors = load_news(api_key, lookback_days, page_size)
 
     st.session_state.news = articles
@@ -551,84 +651,82 @@ if high_priority_only:
 
 
 # ---------------------------------------------------------
-# 6. FUTURISTIC HUD HEADER & KPI METRICS
+# 6. EXECUTIVE HEADER & METRICS
 # ---------------------------------------------------------
 
 st.markdown(f"""
-<div class="hud-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <div class="hud-title">
-            <span>AUDIT INTELLIGENCE</span>
-            <span class="hud-badge">BANK // OS v2.8</span>
+<div class="executive-header">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 12px;">
+        <div class="exec-headline">
+            <span>Global Banking Audit Intelligence</span>
+            <span class="exec-badge">Executive Radar</span>
         </div>
-        <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: #94A3B8;">
-            <span class="live-pulse"></span>INSTITUTIONAL RISK RADAR // LIVE
+        <div class="status-indicator">
+            <span class="live-dot"></span>
+            <span>Continuous Monitoring Active</span>
         </div>
     </div>
-    <div style="font-size: 13px; color: #94A3B8; max-width: 800px;">
-        Real-time global banking surveillance for Internal Audit, Risk Committees, Control Officers, and Supervisory Compliance.
+    <div class="exec-desc">
+        Independent surveillance stream for Internal Audit, Board Risk Committees, and Regulatory Compliance Officers.
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# KPI Metrics Row
+# Metrics Grid - Clean, Professional
 c1, c2, c3, c4, c5 = st.columns(5)
 total_streams = len(filtered)
-critical_alerts = sum(1 for a in filtered if a["audit_relevance"] >= 75)
-elevated_alerts = sum(1 for a in filtered if 50 <= a["audit_relevance"] < 75)
-avg_score = int(sum(a["audit_relevance"] for a in filtered) / total_streams) if total_streams > 0 else 0
 
 with c1:
     st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-label">TOTAL STORIES</div>
-        <div class="metric-value">{total_streams}</div>
+        <div class="metric-label">Total Findings</div>
+        <div class="metric-val">{total_streams}</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c2:
     st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(0, 229, 255, 0.4);">
-        <div class="metric-label" style="color: #00E5FF;">TRANSFORMATION</div>
-        <div class="metric-value" style="color: #00E5FF;">{sum(a["category"] == "Transformation" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label" style="color: #38BDF8;">Transformation</div>
+        <div class="metric-val">{sum(a["category"] == "Transformation" for a in filtered)}</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c3:
     st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.4);">
-        <div class="metric-label" style="color: #F59E0B;">REGULATION</div>
-        <div class="metric-value" style="color: #F59E0B;">{sum(a["category"] == "Regulation" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label" style="color: #FBBF24;">Regulation</div>
+        <div class="metric-val">{sum(a["category"] == "Regulation" for a in filtered)}</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c4:
     st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(244, 63, 94, 0.4);">
-        <div class="metric-label" style="color: #F43F5E;">CYBER & TECH</div>
-        <div class="metric-value" style="color: #F43F5E;">{sum(a["category"] == "Cyber and Tech" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label" style="color: #FB7185;">Cyber & Tech</div>
+        <div class="metric-val">{sum(a["category"] == "Cyber and Tech" for a in filtered)}</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c5:
     st.markdown(f"""
-    <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.4);">
-        <div class="metric-label" style="color: #10B981;">GLOBAL BANKS</div>
-        <div class="metric-value" style="color: #10B981;">{sum(a["category"] == "Global Banks" for a in filtered)}</div>
+    <div class="metric-card">
+        <div class="metric-label" style="color: #34D399;">Global Banks</div>
+        <div class="metric-val">{sum(a["category"] == "Global Banks" for a in filtered)}</div>
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 if errors:
-    with st.expander("⚠️ SOURCE / API WARNINGS", expanded=False):
+    with st.expander("Feed Alerts / Notices", expanded=False):
         for err in errors:
-            st.markdown(f"<div style='font-family: monospace; font-size: 11px; color: #F59E0B;'>• {err}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 12px; color: #FBBF24;'>• {err}</div>", unsafe_allow_html=True)
 
-# Search Bar
+# Search Input
 search_query = st.text_input(
-    "SEARCH",
-    placeholder="QUERY // Filter by institution, regulator (RBI, Basel), keyword (sanctions, model risk)...",
+    "Search Intelligence",
+    placeholder="Search by institution (JPMorgan, HSBC), regulator (RBI, Basel), or control topic...",
     label_visibility="collapsed"
 )
 
@@ -641,18 +739,18 @@ if search_query:
 
 
 # ---------------------------------------------------------
-# 7. TABBED INTELLIGENCE FEED
+# 7. NATURAL, HIGH-LEGIBILITY FEED
 # ---------------------------------------------------------
 
 if not filtered:
     st.markdown("""
-    <div style="text-align: center; padding: 40px; background: #0D1424; border-radius: 8px; border: 1px dashed rgba(56, 189, 248, 0.3);">
-        <div style="font-family: 'JetBrains Mono'; font-size: 13px; color: #94A3B8;">NO AUDIT SIGNALS MATCHING CURRENT CRITERIA</div>
-        <div style="font-size: 11px; color: #64748B; margin-top: 5px;">Adjust search query, increase lookback days, or lower the relevance threshold in the sidebar.</div>
+    <div style="text-align: center; padding: 48px; background: #101626; border-radius: 12px; border: 1px dashed rgba(255, 255, 255, 0.12); margin-top: 14px;">
+        <div style="font-size: 16px; font-weight: 600; color: #E2E8F0;">No signals match the current criteria</div>
+        <div style="font-size: 13.5px; color: #64748B; margin-top: 6px;">Try adjusting your search query, increasing lookback days, or adjusting relevance filters in the sidebar.</div>
     </div>
     """, unsafe_allow_html=True)
 else:
-    tabs = st.tabs(["// ALL"] + [f"// {c.upper()}" for c in selected_categories])
+    tabs = st.tabs(["All Intelligence"] + [f"{c}" for c in selected_categories])
 
     def render_articles(rows):
         for art in rows:
@@ -661,43 +759,44 @@ else:
             score = art["audit_relevance"]
 
             if score >= 75:
-                score_class = "score-critical"
-                score_label = "CRITICAL"
+                score_class = "score-high"
+                score_label = "Priority Action"
             elif score >= 50:
-                score_class = "score-elevated"
-                score_label = "ELEVATED"
+                score_class = "score-mid"
+                score_label = "Elevated Watch"
             else:
-                score_class = "score-monitor"
-                score_label = "MONITOR"
+                score_class = "score-std"
+                score_label = "Standard Signal"
 
-            formatted_date = art["publishedAt"].replace("T", " ").replace("Z", "")[:16] if art["publishedAt"] else "RECENT"
+            formatted_date = art["publishedAt"].replace("T", " ").replace("Z", "")[:16] if art["publishedAt"] else "Recent"
+
+            description_text = art["description"] if art["description"] else "No expanded narrative provided by the news source. Click below to inspect the full coverage."
 
             st.markdown(f"""
-            <div class="article-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div class="article-container">
+                <div class="article-meta-row">
                     <div style="display: flex; gap: 8px; align-items: center;">
-                        <span class="cat-chip" style="background: {cat_color}22; border: 1px solid {cat_color}66; color: {cat_color};">
-                            // {cat.upper()}
+                        <span class="category-tag">
+                            {cat}
                         </span>
-                        <span class="score-chip {score_class}">
-                            {score_label} {score}/100
+                        <span class="score-badge {score_class}">
+                            {score_label} &nbsp;{score}/100
                         </span>
                     </div>
-                    <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #64748B;">
-                        {art['source'].upper()} &nbsp;//&nbsp; {formatted_date}
+                    <div class="article-date">
+                        {art['source']} &nbsp;•&nbsp; {formatted_date}
                     </div>
                 </div>
-                <div style="font-size: 16px; font-weight: 700; color: #FFFFFF; line-height: 1.4; margin-bottom: 8px;">
+                <div class="article-title-text">
                     {art['title']}
                 </div>
-                <div style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 12px;">
-                    {art['description']}
+                <div class="article-summary-text">
+                    {description_text}
                 </div>
                 <div style="display: flex; justify-content: flex-end; align-items: center;">
-                    <a href="{art['url']}" target="_blank" style="text-decoration: none;">
-                        <span style="font-family: 'JetBrains Mono'; font-size: 11px; background: #00E5FF; color: #06090F; padding: 4px 12px; border-radius: 4px; font-weight: 700;">
-                            READ ORIGINAL ARTICLE ↗
-                        </span>
+                    <a href="{art['url']}" target="_blank" class="read-btn">
+                        <span>Read Full Report</span>
+                        <span style="font-size: 14px;">↗</span>
                     </a>
                 </div>
             </div>
@@ -711,22 +810,22 @@ else:
             cat_rows = [a for a in filtered if a["category"] == category]
             if not cat_rows:
                 st.markdown(f"""
-                <div style="text-align: center; padding: 30px; background: #0D1424; border-radius: 8px; border: 1px dashed rgba(56, 189, 248, 0.2);">
-                    <div style="font-family: 'JetBrains Mono'; font-size: 12px; color: #94A3B8;">NO STORIES IN THIS CATEGORY</div>
+                <div style="text-align: center; padding: 36px; background: #101626; border-radius: 12px; border: 1px dashed rgba(255, 255, 255, 0.08);">
+                    <div style="font-size: 14px; color: #94A3B8;">No records found under {category}</div>
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 render_articles(cat_rows)
 
 # ---------------------------------------------------------
-# 8. EXPORT DATA SECTION
+# 8. EXPORT FOR COMMITTEES
 # ---------------------------------------------------------
-st.markdown("<hr style='margin-top: 40px; border-color: rgba(56, 189, 248, 0.2);' />", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 36px; border-color: rgba(255, 255, 255, 0.07);' />", unsafe_allow_html=True)
 col_down1, col_down2 = st.columns([8, 2])
 with col_down1:
     st.markdown("""
-    <div style="font-family: 'JetBrains Mono'; font-size: 11px; color: #64748B;">
-        AEGIS BANKING AUDIT INTELLIGENCE PLATFORM • EXPORT TELEMETRY FOR AUDIT COMMITTEES
+    <div style="font-size: 12px; color: #64748B;">
+        Institutional Banking Surveillance System • Export intelligence telemetry for Audit and Risk Committees
     </div>
     """, unsafe_allow_html=True)
 with col_down2:
@@ -734,7 +833,7 @@ with col_down2:
         df_export = pd.DataFrame(filtered)
         csv = df_export.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="EXPORT AUDIT CSV",
+            label="Download CSV Report",
             data=csv,
             file_name=f"banking_audit_intel_{datetime.utcnow().strftime('%Y%m%d_%H%M')}.csv",
             mime="text/csv",
